@@ -17,7 +17,7 @@ use PhpParser\PrettyPrinter\Standard;
 /**
  * Class Autoload
  * @package Plumbok
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class Autoload
 {

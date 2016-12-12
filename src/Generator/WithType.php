@@ -12,7 +12,7 @@ use phpDocumentor\Reflection\Type;
 /**
  * Class WithType
  * @package Plumbok\Generator
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 trait WithType
 {

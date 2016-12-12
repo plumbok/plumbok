@@ -20,7 +20,7 @@ use PhpParser\Node;
 /**
  * Class GeneratorBase
  * @package Plumbok\Generator
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 abstract class GeneratorBase implements Generator
 {

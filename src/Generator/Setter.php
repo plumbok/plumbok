@@ -16,7 +16,7 @@ use PhpParser\Node;
 /**
  * Class Setter
  * @package Plumbok\Generator
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class Setter extends GeneratorBase
 {

@@ -10,7 +10,7 @@ namespace Plumbok\Generator;
 /**
  * Class WithPropertyName
  * @package Plumbok\Generator
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 trait WithPropertyName
 {

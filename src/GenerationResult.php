@@ -13,7 +13,7 @@ use PhpParser\Node\Stmt;
 /**
  * Class GenerationResult
  * @package Plumbok
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class GenerationResult
 {

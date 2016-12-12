@@ -12,7 +12,7 @@ use phpDocumentor\Reflection\DocBlock\Serializer;
 /**
  * Interface Generator
  * @package Plumbok
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 interface Generator
 {

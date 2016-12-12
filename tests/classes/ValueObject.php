@@ -12,7 +12,7 @@ use Plumbok\Annotation\Setter;
 /**
  * Class ValueObject
  * @package Plumbok\Test
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  * @Value
  */
 class ValueObject

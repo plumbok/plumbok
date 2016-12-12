@@ -26,7 +26,7 @@ use PhpParser\Parser;
 /**
  * Class GeneratorParser
  * @package Plumbok
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class Compiler
 {

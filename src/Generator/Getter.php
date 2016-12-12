@@ -17,7 +17,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 /**
  * Class Getter
  * @package Plumbok\Compiler
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class Getter extends GeneratorBase
 {
