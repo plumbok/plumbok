@@ -7,17 +7,6 @@ Runtime Code Generator like Lombok for PHP.
 
 ---
 
----
-
-## Features
-
-This library can create objects like:
-
-* **Uri** [RFC3986](https://tools.ietf.org/html/rfc3986) - includes wide abstraction with: **Scheme**, **Authority**, **Path**, **Query**, **Fragment**
-* **UriReference** [RFC3986](https://tools.ietf.org/html/rfc3986) - can be resolved with valid **Uri** _(eg. `$resolvedUri = $uriReference->resolve($uri);`)_
-* **UriTemplate** [RFC6570](https://tools.ietf.org/html/rfc6570) - produces **Uri** or **UriReference** objects _(depends on template)_
-
-
 ## Installation
 
 Install with Composer
