@@ -1,0 +1,10 @@
+language: php
+php:
+  - '7.0'
+  - '7.1'
+  - nightly
+install: composer install --dev
+script: phpunit
+notifications:
+    on_success: never
+    on_failure: always

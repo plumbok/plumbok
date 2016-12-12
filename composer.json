@@ -1,0 +1,37 @@
+{
+  "name": "plumbok/plumbok",
+  "description": "Runtime Code Generator like Lombok for PHP",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michał Brzuchalski",
+      "email": "michal.brzuchalski@gmail.com",
+      "homepage": "https://github.com/brzuchal/"
+    }
+  ],
+  "require": {
+    "php": "7.*",
+    "nikic/php-parser": "^3.0",
+    "doctrine/annotations": "^1.3",
+    "phpdocumentor/reflection-docblock": "^3.1",
+    "doctrine/inflector": "^1.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7",
+    "phpunit/php-code-coverage": "^4.0.1",
+    "squizlabs/php_codesniffer": "^2.6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Plumbok\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Plumbok\\Test\\": "tests/classes/"
+    }
+  },
+  "config": {
+    "bin-dir": "bin/"
+  }
+}
