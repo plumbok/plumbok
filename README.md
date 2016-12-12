@@ -19,10 +19,6 @@ Install with Composer
 composer require madkom/uri
 ```
 
-## Requirements
-
-This library requires *PHP* in `~7` version.
-
 ## Usage
 
 Registering additional autoloader:
