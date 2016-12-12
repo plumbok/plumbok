@@ -16,7 +16,7 @@ and loads newly generated code with added methods in preprocess step.
 Install with Composer
 
 ```
-composer require madkom/uri
+composer require plumbok/plumbok
 ```
 
 ## Usage
