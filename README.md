@@ -34,7 +34,7 @@ Using annotations in class:
 ```php
 namespace Plumbok\Test;
 
-class ValueObject
+class Person
 {
     /**
      * Holds age
@@ -47,7 +47,7 @@ class ValueObject
      * @var \DateTime
      * @Getter @Setter
      */
-    private $date;
+    private $birthdate;
 
     /**
      * @var int[]
@@ -71,12 +71,12 @@ namespace Plumbok\Test;
 /**
  * @method int getAge() 
  * @method void setAge(int $age) 
- * @method \DateTime getDate() 
- * @method void setDate(\DateTime $date) 
+ * @method \DateTime getBirthdate() 
+ * @method void setBirthdate(\DateTime $date) 
  * @method int[] getDays() 
  * @method void setDays(int[] $days) 
  */
-class ValueObject
+class Person
 {
     /**
      * Holds age
@@ -89,7 +89,7 @@ class ValueObject
      * @var \DateTime
      * @Getter @Setter
      */
-    private $date;
+    private $birthdate;
 
     /**
      * @var int[]
@@ -110,7 +110,7 @@ Second step is including generated code which looks like:
 ```php
 namespace Plumbok\Test;
 
-class ValueObject
+class Person
 {
     /**
      * Holds age
@@ -122,7 +122,7 @@ class ValueObject
      * @var \DateTime
      * @Getter @Setter
      */
-    private $date;
+    private $birthdate;
     /**
      * @var int[]
      * @Getter @Setter
@@ -152,23 +152,23 @@ class ValueObject
         $this->age = $age;
     }
     /**
-     * Retrieves date
+     * Retrieves birthdate
      *
      * @return \DateTime 
      */
-    public function getDate() : \DateTime
+    public function getBirthdate() : \DateTime
     {
-        return $this->date;
+        return $this->birthdate;
     }
     /**
-     * Sets date
+     * Sets birthdate
      *
-     * @param \DateTime $date
+     * @param \DateTime $birthdate
      * @return void 
      */
-    public function setDate(\DateTime $date)
+    public function setBirthdate(\DateTime $birthdate)
     {
-        $this->date = $date;
+        $this->birthdate = $birthdate;
     }
     /**
      * Retrieves days
