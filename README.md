@@ -72,7 +72,7 @@ namespace Plumbok\Test;
  * @method int getAge() 
  * @method void setAge(int $age) 
  * @method \DateTime getBirthdate() 
- * @method void setBirthdate(\DateTime $date) 
+ * @method void setBirthdate(\DateTime $birthdate) 
  * @method int[] getDays() 
  * @method void setDays(int[] $days) 
  */
