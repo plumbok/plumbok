@@ -4,7 +4,7 @@ php:
   - '7.1'
   - nightly
 install: composer install --dev
-script: phpunit
+script: bin/phpunit
 notifications:
     on_success: never
     on_failure: always
