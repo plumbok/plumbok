@@ -200,7 +200,7 @@ class Person
 * [x] Implement `@Getter` annotation
 * [x] Implement `@Setter` annotation
 * [ ] Implement `@ToString` annotation
-* [ ] Implement `@AllArgsConstructor`, `@NoArgsConstructor` annotation
+* [ ] Implement `@AllArgsConstructor`, `@NoArgsConstructor`, `@RequiredArgsConstructor` annotation
 * [ ] Implement `@Equal` annotation
 * [ ] Implement `@Value`, `@Data` annotations
 

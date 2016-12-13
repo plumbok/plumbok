@@ -5,10 +5,9 @@
  * Date: 11.12.16
  * Time: 13:28
  */
-namespace Plumbok\Generator;
+namespace Plumbok\Compiler;
 
 use Plumbok\Compiler;
-use Plumbok\Generator;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Serializer;
 use phpDocumentor\Reflection\Type;
@@ -19,11 +18,16 @@ use PhpParser\Node;
 
 /**
  * Class GeneratorBase
- * @package Plumbok\Generator
+ * @package Plumbok\Compiler\Generator
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
-abstract class GeneratorBase implements Generator
+abstract class Generator
 {
+    /**
+     * @return Compiler\Statements
+     */
+    abstract public function generate() : Compiler\Statements;
+
     /**
      * @var Serializer
      */
@@ -44,13 +48,14 @@ abstract class GeneratorBase implements Generator
      */
     protected function createComment(DocBlock $docblock) : Comment
     {
-        return new Comment($this->docBlockSerializer->getDocComment($docblock));
+        return new Comment\Doc($this->docBlockSerializer->getDocComment($docblock));
     }
 
     /**
      * @param string $propertyName
      * @param Type $type
      * @return Node\Param
+     * @deprecated
      */
     protected function createParam(string $propertyName, Type $type) : Node\Param
     {

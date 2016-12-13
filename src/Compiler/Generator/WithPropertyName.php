@@ -5,11 +5,11 @@
  * Date: 11.12.16
  * Time: 13:32
  */
-namespace Plumbok\Generator;
+namespace Plumbok\Compiler\Generator;
 
 /**
  * Class WithPropertyName
- * @package Plumbok\Generator
+ * @package Plumbok\Compiler\Generator
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 trait WithPropertyName

@@ -7,16 +7,14 @@
  */
 namespace Plumbok\Test;
 
-use Plumbok\Annotation\Getter;
-use Plumbok\Annotation\Setter;
-/**
- * Class ValueObject
- * @package Plumbok\Test
- * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
- * @Value
- */
-class ValueObject
+class Person
 {
+    /**
+     * @var array
+     * @Getter @Setter
+     */
+    private $names = [];
+
     /**
      * Holds age
      * @var int
@@ -28,17 +26,11 @@ class ValueObject
      * @var \DateTime
      * @Getter @Setter
      */
-    private $date;
+    private $birthdate;
 
     /**
      * @var int[]
      * @Getter @Setter
      */
-    private $days;
-
-    /**
-     * @var array
-     * @Getter @Setter
-     */
-    private $names = [];
+    private $favouriteNumbers;
 }

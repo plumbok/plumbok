@@ -5,13 +5,13 @@
  * Date: 11.12.16
  * Time: 13:33
  */
-namespace Plumbok\Generator;
+namespace Plumbok\Compiler\Generator;
 
 use phpDocumentor\Reflection\Type;
 
 /**
  * Class WithType
- * @package Plumbok\Generator
+ * @package Plumbok\Compiler\Generator
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 trait WithType
