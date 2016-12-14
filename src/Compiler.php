@@ -8,11 +8,9 @@
 namespace Plumbok;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use phpDocumentor\Reflection\Fqsen;
-use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
-use phpDocumentor\Reflection\Types\Object_;
-use PhpParser\PrettyPrinterAbstract;
+use PhpParser\ParserFactory;
+use PhpParser\PrettyPrinter\Standard;
 use Plumbok\Annotation\Getter;
 use Plumbok\Annotation\Setter;
 use Plumbok\Compiler\Context;
@@ -41,19 +39,15 @@ class Compiler
     private $phpParser;
     /** @var DocParser */
     private $docParser;
-//    /** @var DocBlock */
-//    private $docBlockFactory;
     /** @var Serializer */
     private $docBlockSerializer;
 
     /**
      * Compiler constructor.
-     * @param Parser $phpParser
-     * @param PrettyPrinterAbstract $prettyPrinter
      */
-    public function __construct(Parser $phpParser, PrettyPrinterAbstract $prettyPrinter)
+    public function __construct()
     {
-        $this->phpParser = $phpParser;
+        $this->phpParser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
         $this->docParser = new DocParser();
         $this->docParser->setIgnoreNotImportedAnnotations(true);
         $this->docParser->setIgnoredAnnotationNames(['package', 'author']);
@@ -62,7 +56,7 @@ class Compiler
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'Data.php');
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'Getter.php');
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'Setter.php');
-        $this->prettyPrinter = $prettyPrinter;
+        $this->prettyPrinter = new Standard();
         $this->docBlockSerializer = new Serializer();
     }
 
@@ -73,7 +67,10 @@ class Compiler
     public function compile(string $filename) : string
     {
         $nodes = $this->phpParser->parse(file_get_contents($filename));
+        $oldDocBlocks = $this->findClassDocBlocks(...$nodes);
         $this->processNodes(...$nodes);
+        $newDocBlocks = $this->findClassDocBlocks(...$nodes);
+        $this->applyFileDocBlocks($filename, $oldDocBlocks, $newDocBlocks);
 
         $code = $this->prettyPrinter->prettyPrint($nodes);
 //        echo $code;
@@ -186,6 +183,9 @@ class Compiler
         return $generator->generate();
     }
 
+    /**
+     * @param Node[] ...$nodes
+     */
     private function processNodes(Node ...$nodes)
     {
         $namespaces = $this->findNamespaces(...$nodes);
@@ -207,6 +207,10 @@ class Compiler
         }
     }
 
+    /**
+     * @param Node\Stmt\Class_ $class
+     * @param TypeContext $typeContext
+     */
     private function processClass(Node\Stmt\Class_ $class, TypeContext $typeContext)
     {
         $classAnnotations = $class->getDocComment() ? $this->docParser->parse($class->getDocComment()->getText()) : [];
@@ -261,14 +265,26 @@ class Compiler
         foreach (Tags::createFromStatements($statements, $docBlockFactory) as $tag) {
             $tags[] = $tag;
         }
-        $class->setDocComment(new Doc($this->docBlockSerializer->getDocComment(new DocBlock(
-            $classDocBlock->getSummary(),
-            $classDocBlock->getDescription(),
-            $tags
-        ))));
+        $class->setDocComment($this->createDocComment($classDocBlock, ...$tags));
         foreach ($statements as $statement) {
             $class->stmts[] = $statement;
         }
+    }
+
+    /**
+     * @param DocBlock $docBlock
+     * @param DocBlock\Tag[] ...$tags
+     * @return Doc
+     */
+    private function createDocComment(DocBlock $docBlock, DocBlock\Tag ...$tags) : Doc
+    {
+        $docComment = $this->docBlockSerializer->getDocComment(new DocBlock(
+            $docBlock->getSummary(),
+            $docBlock->getDescription(),
+            $tags
+        ));
+
+        return new Doc(str_replace("/**\n * \n *\n", "/**\n", $docComment));
     }
 
     /**
@@ -279,5 +295,59 @@ class Compiler
     private function createDocBlock($docBlock, TypeContext $typeContext) : DocBlock
     {
         return DocBlockFactory::createInstance()->create($docBlock, $typeContext);
+    }
+
+    /**
+     * @param Node[] ...$nodes
+     * @return array
+     */
+    private function findClassDocBlocks(Node ...$nodes) : array
+    {
+        $docBlocks = [];
+        $namespaces = $this->findNamespaces(...$nodes);
+        foreach ($namespaces as $namespace) {
+            $classes = $this->findClasses(...$namespace->stmts);
+            foreach ($classes as $class) {
+                $docBlocks["{$namespace->name}\\{$class->name}"] = [
+                    'line' => $class->getLine(),
+                    'docBlock' => $class->getDocComment(),
+                ];
+            }
+        }
+        if (!$namespaces) {
+            $classes = $this->findClasses(...$nodes);
+            foreach ($classes as $class) {
+                $docBlocks[$class->name] = [
+                    'line' => $class->getLine(),
+                    'docBlock' => $class->getDocComment(),
+                ];
+            }
+        }
+
+        return $docBlocks;
+    }
+
+    /**
+     * @param string $filename
+     * @param array $oldDocBlocks
+     * @param array $newDocBlocks
+     */
+    private function applyFileDocBlocks(string $filename, array $oldDocBlocks, array $newDocBlocks)
+    {
+        $fp = fopen($filename, 'rw+');
+        $fragments = [];
+        foreach ($oldDocBlocks as $className => $docBlockPosition) {
+            /** @var Doc $docComment */
+            $docComment = $docBlockPosition['docBlock'];
+            /** @var Doc $newDocComment */
+            $newDocComment = $newDocBlocks[$className]['docBlock'];
+            if ($docComment->getFilePos()) {
+                $fragments[] = fread($fp, $docComment->getFilePos() - ftell($fp));
+                $fragments[] = $newDocComment->getText();
+                fseek($fp, strlen($docComment->getText()), SEEK_CUR);
+            }
+        }
+        $fragments[] = fread($fp, filesize($filename) - ftell($fp));
+        file_put_contents($filename, implode($fragments));
     }
 }

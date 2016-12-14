@@ -8,11 +8,6 @@
 namespace Plumbok;
 
 use Composer\Autoload\ClassLoader;
-use Doctrine\Common\Annotations\PhpParser;
-use PhpParser\NodeTraverser;
-use PhpParser\Parser;
-use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter\Standard;
 
 /**
  * Class Autoload
@@ -29,12 +24,15 @@ class Autoload
     private $classLoader;
     /** @var Compiler */
     private $compiler;
+    /** @var Cache */
+    private $cache;
 
     /**
      * @param string $namespace
+     * @param Cache $cache
      * @return bool
      */
-    public static function register(string $namespace) : bool
+    public static function register(string $namespace, Cache $cache = null) : bool
     {
         if (true === empty($namespace)) {
             throw new \InvalidArgumentException('Invalid namespace, trying to registered empty namespace');
@@ -48,7 +46,7 @@ class Autoload
             }
         }
         if (isset($classLoader)) {
-            $loader = new self($namespace, $classLoader);
+            $loader = new self($namespace, $classLoader, $cache);
             return spl_autoload_register([$loader, 'load'], true, true);
         }
         throw new \RuntimeException("Unable to find Composer ClassLoader, did you forget require 'autoload.php'?");
@@ -58,24 +56,44 @@ class Autoload
      * Autoload constructor.
      * @param string $namespace
      * @param ClassLoader $classLoader
+     * @param Cache $cache
      */
-    private function __construct(string $namespace, ClassLoader $classLoader)
+    private function __construct(string $namespace, ClassLoader $classLoader, Cache $cache = null)
     {
         $this->namespace = $namespace;
         $this->length = strlen($namespace);
         $this->classLoader = $classLoader;
-
-        $parser = (new ParserFactory)->create(ParserFactory::ONLY_PHP7);
-        $prettyPrinter = new Standard;
-        $this->compiler = new Compiler($parser, $prettyPrinter);
+        $this->compiler = new Compiler();
+        $this->cache = $cache;
     }
 
+    /**
+     * @param string $class
+     * @return bool
+     */
     public function load(string $class)
     {
         if (substr($class, 0, $this->length) === $this->namespace) {
             $filename = $this->classLoader->findFile($class);
-            if (file_exists($filename)) {
-                eval($this->compiler->compile($filename));
+            if ($this->cache instanceof Cache) {
+                if ($this->cache->isFresh($filename)) {
+                    $this->cache->load($filename);
+                } else {
+                    $compiled = $this->compiler->compile($filename);
+                    if (empty($compiled)) {
+                        return false;
+                    }
+                    $this->cache->write($filename, "<?php\n{$compiled}");
+                    $this->cache->load($filename);
+                }
+            } else {
+                if (file_exists($filename)) {
+                    $compiled = $this->compiler->compile($filename);
+                    if (empty($compiled)) {
+                        return false;
+                    }
+                    eval($compiled);
+                }
             }
         }
     }

@@ -7,13 +7,11 @@
  */
 namespace Plumbok\Test;
 
-use Plumbok\Test\{
-    Person
-};
-use Plumbok\Test\Node\Common;
-
 /**
- * @Value
+ * @Value 
+ * @method string getEmail()
+ * @method \Plumbok\Test\UnannotatedClass getSomeObject()
+ * @method void setSomeObject(\Plumbok\Test\UnannotatedClass $someObject)
  */
 class Email
 {
@@ -23,16 +21,10 @@ class Email
     private $email = '';
 
     /**
-     * @var Common
+     * @var UnannotatedClass
      * @Setter @Getter
      */
-    private $common;
-
-    /**
-     * @var Person
-     * @Setter @Getter
-     */
-    private $person;
+    private $someObject;
 
     private function setEmail(string $email)
     {
