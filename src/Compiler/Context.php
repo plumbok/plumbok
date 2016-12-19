@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -17,7 +17,7 @@ use Plumbok\Annotation\Value;
 /**
  * Class Context
  * @package Plumbok\Compiler
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class Context
 {

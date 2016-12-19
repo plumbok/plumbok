@@ -38,7 +38,7 @@ class GettersAndSettersTest extends PHPUnit_Framework_TestCase
         $reflection = new ReflectionClass(Person::class);
 
         foreach ($reflection->getProperties() as $property) {
-            $setterExists = $reflection->hasMethod('set' . ucfirst($property->getName()));
+            $setterExists = $reflection->hasMethod($setter = 'set' . ucfirst($property->getName()));
             $this->assertTrue($setterExists);
         }
     }

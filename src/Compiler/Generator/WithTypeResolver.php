@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -7,12 +7,16 @@
  */
 namespace Plumbok\Compiler\Generator;
 
-
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Context;
 
+/**
+ * Class WithTypeResolver
+ * @package Plumbok\Compiler\Generator
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
+ */
 trait WithTypeResolver
 {
     /**
@@ -20,29 +24,34 @@ trait WithTypeResolver
      */
     private $typeContext;
 
+    /**
+     * @param Context $typeContext
+     */
     public function setTypeContext(Context $typeContext)
     {
         $this->typeContext = $typeContext;
     }
 
-    private function resolveType(string $type) : string
+    /**
+     * @param Type $type
+     * @return string
+     */
+    private function resolveType(Type $type) : string
     {
-        /** @var TypeResolver $typeResolver */
-        static $typeResolver;
-        if ($typeResolver === null) {
-            $typeResolver = new TypeResolver();
-        }
-
-        $resolvedType = $typeResolver->resolve($type, $this->typeContext);
-        if ($resolvedType instanceof Array_) {
+//        /** @var TypeResolver $typeResolver */
+//        static $typeResolver;
+//        if ($typeResolver === null) {
+//            $typeResolver = new TypeResolver();
+//        }
+        if ($type instanceof Array_) {
             return 'array';
         }
         foreach($this->typeContext->getNamespaceAliases() as $alias => $namespace) {
-            if ((string)$resolvedType === "\\{$namespace}") {
+            if ((string)$type === "\\{$namespace}") {
                 return $alias;
             }
         }
 
-        return (string)$resolvedType;
+        return (string)$type;
     }
 }

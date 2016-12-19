@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -8,6 +8,8 @@
 namespace Plumbok;
 
 use Composer\Autoload\ClassLoader;
+use Doctrine\Common\Annotations\PhpParser;
+use PhpParser\PrettyPrinter\Standard;
 
 /**
  * Class Autoload
@@ -26,10 +28,12 @@ class Autoload
     private $compiler;
     /** @var Cache */
     private $cache;
+    /** @var Standard */
+    private $serializer;
 
     /**
      * @param string $namespace
-     * @param Cache $cache
+     * @param Cache $cache Compiler cache, if null then cache in memory and eval code
      * @return bool
      */
     public static function register(string $namespace, Cache $cache = null) : bool
@@ -46,7 +50,7 @@ class Autoload
             }
         }
         if (isset($classLoader)) {
-            $loader = new self($namespace, $classLoader, $cache);
+            $loader = new self($namespace, $classLoader, is_null($cache) ? new Cache\NoCache() : $cache);
             return spl_autoload_register([$loader, 'load'], true, true);
         }
         throw new \RuntimeException("Unable to find Composer ClassLoader, did you forget require 'autoload.php'?");
@@ -64,37 +68,29 @@ class Autoload
         $this->length = strlen($namespace);
         $this->classLoader = $classLoader;
         $this->compiler = new Compiler();
+        $this->serializer = new Standard();
         $this->cache = $cache;
     }
 
     /**
      * @param string $class
-     * @return bool
+     * @return null
      */
     public function load(string $class)
     {
         if (substr($class, 0, $this->length) === $this->namespace) {
             $filename = $this->classLoader->findFile($class);
-            if ($this->cache instanceof Cache) {
-                if ($this->cache->isFresh($filename)) {
-                    $this->cache->load($filename);
-                } else {
-                    $compiled = $this->compiler->compile($filename);
-                    if (empty($compiled)) {
-                        return false;
-                    }
-                    $this->cache->write($filename, "<?php\n{$compiled}");
-                    $this->cache->load($filename);
-                }
+            if ($this->cache->isFresh($filename)) {
+                $this->cache->load($filename);
             } else {
-                if (file_exists($filename)) {
-                    $compiled = $this->compiler->compile($filename);
-                    if (empty($compiled)) {
-                        return false;
-                    }
-                    eval($compiled);
+                $nodes = $this->compiler->compile($filename);
+                if (count($nodes)) {
+                    $this->cache->write($filename, $code = $this->serializer->prettyPrint($nodes));
+                    $this->cache->load($filename);
+//                    echo $code;
                 }
             }
         }
+        return null;
     }
 }

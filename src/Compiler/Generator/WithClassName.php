@@ -2,31 +2,28 @@
 /**
  * Created by PhpStorm.
  * User: brzuchal
- * Date: 11.12.16
- * Time: 13:33
+ * Date: 18.12.16
+ * Time: 07:06
  */
 namespace Plumbok\Compiler\Generator;
 
-use phpDocumentor\Reflection\Type;
-
 /**
- * Class WithType
+ * Class WithClassName
  * @package Plumbok\Compiler\Generator
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
-trait WithType
+trait WithClassName
 {
     /**
-     * @var Type
+     * @var string Holds class name
      */
-    private $type;
+    private $className;
 
     /**
-     * Sets type
-     * @param Type $type
+     * @param string $className
      */
-    public function setType(Type $type)
+    public function setClassName(string $className)
     {
-        $this->type = $type;
+        $this->className = $className;
     }
 }

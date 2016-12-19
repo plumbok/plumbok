@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -18,7 +18,7 @@ use Traversable;
 /**
  * Class Tags
  * @package Plumbok\Compiler
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class Tags implements \IteratorAggregate
 {

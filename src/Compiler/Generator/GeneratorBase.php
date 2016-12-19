@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
  * Date: 11.12.16
  * Time: 13:28
  */
-namespace Plumbok\Compiler;
+namespace Plumbok\Compiler\Generator;
 
 use Plumbok\Compiler;
 use phpDocumentor\Reflection\DocBlock;
@@ -21,7 +21,7 @@ use PhpParser\Node;
  * @package Plumbok\Compiler\Generator
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
-abstract class Generator
+abstract class GeneratorBase
 {
     /**
      * @return Compiler\Statements
@@ -74,13 +74,29 @@ abstract class Generator
 
     /**
      * @param string $propertyName
-     * @return Node\Expr\Assign
+     * @param string $propertySetter
+     * @return Node\Expr
      */
-    protected function createPropertyMutator(string $propertyName) : Node\Expr\Assign
+    protected function createPropertyMutation(string $propertyName, string $propertySetter = null) : Node\Expr
     {
-        return new Node\Expr\Assign(
-            new Node\Expr\PropertyFetch(new Node\Expr\Variable('this'), $propertyName),
-            new Node\Expr\Variable($propertyName)
+        // $this->{$propertyName} = $$propertyName;
+        if (empty($propertySetter)) {
+            return new Node\Expr\Assign(
+                new Node\Expr\PropertyFetch(
+                    new Node\Expr\Variable('this'),
+                    $propertyName
+                ),
+                new Node\Expr\Variable($propertyName)
+            );
+        }
+
+        // $this->set{$propertyName}($$propertyName);
+        return new Node\Expr\MethodCall(
+            new Node\Expr\Variable('this'),
+            $propertySetter,
+            [
+                new Node\Expr\Variable($propertyName)
+            ]
         );
     }
 

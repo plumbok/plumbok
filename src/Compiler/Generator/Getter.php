@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -12,7 +12,6 @@ use Doctrine\Common\Inflector\Inflector;
 use PhpParser\Node;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Types\Boolean;
-use Plumbok\Compiler\Generator;
 use Plumbok\Compiler\Statements;
 
 /**
@@ -20,7 +19,7 @@ use Plumbok\Compiler\Statements;
  * @package Plumbok\Compiler
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
-class Getter extends Generator
+class Getter extends GeneratorBase
 {
     use WithPropertyName, WithType, WithTypeResolver;
 

@@ -7,6 +7,12 @@
  */
 namespace Plumbok\Test;
 
+/**
+ * Class Person
+ *
+ * @package Plumbok\Test
+ * @author Michał Brzuchalski<m.brzuchalski@madkom.pl>
+ */
 class Person
 {
     /**

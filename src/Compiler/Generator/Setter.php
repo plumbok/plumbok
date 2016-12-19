@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -11,7 +11,6 @@ use PhpParser\Node\Stmt\Class_;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Types\Void_;
 use PhpParser\Node;
-use Plumbok\Compiler\Generator;
 use Plumbok\Compiler\Statements;
 
 /**
@@ -19,7 +18,7 @@ use Plumbok\Compiler\Statements;
  * @package Plumbok\Compiler\Generator
  * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
-class Setter extends Generator
+class Setter extends GeneratorBase
 {
     use WithPropertyName, WithType, WithTypeResolver;
 
@@ -44,7 +43,7 @@ class Setter extends Generator
             $functionName, [
                 'flags' => Class_::MODIFIER_PUBLIC,
                 'params' => [new Node\Param($this->propertyName, null, $this->resolveType($this->type))],
-                'statements' => [$this->createPropertyMutator($this->propertyName)],
+                'statements' => [$this->createPropertyMutation($this->propertyName)],
                 'returnType' => PHP_VERSION_ID < 700100 ? null : 'void',
             ], [
                 'comments' => [$this->createComment($docBlock)],

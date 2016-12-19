@@ -9,9 +9,6 @@ namespace Plumbok\Test;
 
 /**
  * @Value 
- * @method string getEmail()
- * @method \Plumbok\Test\UnannotatedClass getSomeObject()
- * @method void setSomeObject(\Plumbok\Test\UnannotatedClass $someObject)
  */
 class Email
 {

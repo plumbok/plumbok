@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -12,9 +12,9 @@ use PhpParser\Node\Stmt;
 /**
  * Class Statements
  * @package Plumbok\Compiler
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
-class Statements implements \IteratorAggregate
+class Statements implements \IteratorAggregate, \Countable
 {
     /**
      * @var Stmt[] Holds generated statements
@@ -49,5 +49,19 @@ class Statements implements \IteratorAggregate
     public function getIterator() : \Traversable
     {
         return new \ArrayIterator($this->statements);
+    }
+
+    /**
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     * @since 5.1.0
+     */
+    public function count()
+    {
+        return count($this->statements);
     }
 }
