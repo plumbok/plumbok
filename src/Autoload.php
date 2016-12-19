@@ -8,8 +8,8 @@
 namespace Plumbok;
 
 use Composer\Autoload\ClassLoader;
-use Doctrine\Common\Annotations\PhpParser;
 use PhpParser\PrettyPrinter\Standard;
+use Plumbok\Compiler\NodeFinder;
 
 /**
  * Class Autoload
@@ -85,9 +85,10 @@ class Autoload
             } else {
                 $nodes = $this->compiler->compile($filename);
                 if (count($nodes)) {
-                    $this->cache->write($filename, $code = $this->serializer->prettyPrint($nodes));
+                    $tagsUpdater = new TagsUpdater(new NodeFinder());
+                    $tagsUpdater->applyNodes($filename, ...$nodes);
+                    $this->cache->write($filename, $this->serializer->prettyPrint($nodes));
                     $this->cache->load($filename);
-//                    echo $code;
                 }
             }
         }

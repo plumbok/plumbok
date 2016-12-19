@@ -55,6 +55,10 @@ class ClassReader
      */
     public function readDocBlock(Class_ $class) : DocBlock
     {
+        if (empty((string)$class->getDocComment())) {
+            return new DocBlock('', null, [], $this->context);
+        }
+
         return DocBlockFactory::createInstance()->create((string)$class->getDocComment(), $this->context);
     }
 }

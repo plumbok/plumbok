@@ -10,7 +10,6 @@ namespace Plumbok;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use PhpParser\ParserFactory;
-use PhpParser\PrettyPrinter\Standard;
 use Plumbok\Annotation\Getter;
 use Plumbok\Annotation\Setter;
 use Plumbok\Compiler\Code\ClassReader;
@@ -19,14 +18,12 @@ use Plumbok\Compiler\Context;
 use Doctrine\Common\Annotations\DocParser;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Serializer;
-use phpDocumentor\Reflection\DocBlockFactory;
 use PhpParser\Comment\Doc;
 use PhpParser\Node;
 use PhpParser\Parser;
 use Plumbok\Compiler\GeneratorFactory;
 use Plumbok\Compiler\NodeFinder;
 use Plumbok\Compiler\Statements;
-use Plumbok\Compiler\Tags;
 
 /**
  * Class GeneratorParser
@@ -126,16 +123,16 @@ class Compiler
                 }
             }
         }
-
+        // remove @method tags from doc comment
         $classDocBlock = $classReader->readDocBlock($class);
         $tags = $classDocBlock->getTags();
-        $docBlockFactory = function ($docBlock) use ($typeContext) : DocBlock {
-            return DocBlockFactory::createInstance()->create($docBlock, $typeContext);
-        };
-        foreach (Tags::createFromStatements($statements, $docBlockFactory) as $tag) {
-            $tags[] = $tag;
+        foreach ($tags as $index => $tag) {
+            if ($tag instanceof DocBlock\Tags\Method) {
+                unset($tags[$index]);
+            }
         }
         $class->setDocComment($this->createDocComment($classDocBlock, ...$tags));
+        // append new statements
         foreach ($statements as $statement) {
             $class->stmts[] = $statement;
         }
