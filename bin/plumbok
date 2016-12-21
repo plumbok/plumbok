@@ -6,12 +6,52 @@
  * Date: 12.12.16
  * Time: 12:43
  */
+namespace Plumbok;
 
-foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Command\HelpCommand;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $file) {
     if (file_exists($file)) {
         require $file;
         break;
     }
 }
 
-// implement console app
+/** @var Application $app */
+$app = new class('Plumbok', '1.0') extends Application {
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+    public function doRun(InputInterface $input, OutputInterface $output)
+    {
+        if (true === $input->hasParameterOption(array('--version', '-V'), true)) {
+            $output->writeln($this->getLongVersion());
+
+            return 0;
+        }
+        if (true === $input->hasParameterOption(array('--help', '-h'), true)) {
+            $input = new ArrayInput(array('command_name' => 'compile'));
+
+            return $this->doRunCommand($this->find('help'), $input, $output);
+        }
+        $input = new ArgvInput(array_merge(array($_SERVER['argv'][0], 'compile'), array_slice($_SERVER['argv'], 1)));
+
+        return $this->doRunCommand($this->find('compile'), $input, $output);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultCommands()
+    {
+        return array(new HelpCommand(), new Command\CompileCommand());
+    }
+};
+$app->run();

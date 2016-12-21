@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -7,9 +7,13 @@
  */
 namespace Plumbok\Compiler\Code;
 
-
 use phpDocumentor\Reflection\Type;
 
+/**
+ * Class Property
+ * @package Plumbok\Compiler\Code
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
+ */
 class Property
 {
     /**

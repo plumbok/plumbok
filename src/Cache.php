@@ -16,20 +16,21 @@ interface Cache
 {
     /**
      * Checks cached file freshness
-     * @param string $filename Source file name
+     * @param string $className Source class name
+     * @param int $time Source file modification time
      * @return bool
      */
-    public function isFresh(string $filename): bool;
+    public function isFresh(string $className, int $time): bool;
 
     /**
-     * @param string $filename
+     * @param string $className
      */
-    public function load(string $filename);
+    public function load(string $className);
 
     /**
      * Write file to cache
-     * @param string $filename
+     * @param string $className
      * @param string $content
      */
-    public function write(string $filename, string $content);
+    public function write(string $className, string $content);
 }

@@ -80,15 +80,15 @@ class Autoload
     {
         if (substr($class, 0, $this->length) === $this->namespace) {
             $filename = $this->classLoader->findFile($class);
-            if ($this->cache->isFresh($filename)) {
-                $this->cache->load($filename);
+            if ($this->cache->isFresh($class, filemtime($filename))) {
+                $this->cache->load($class);
             } else {
                 $nodes = $this->compiler->compile($filename);
                 if (count($nodes)) {
                     $tagsUpdater = new TagsUpdater(new NodeFinder());
                     $tagsUpdater->applyNodes($filename, ...$nodes);
-                    $this->cache->write($filename, $this->serializer->prettyPrint($nodes));
-                    $this->cache->load($filename);
+                    $this->cache->write($class, $this->serializer->prettyPrint($nodes));
+                    $this->cache->load($class);
                 }
             }
         }

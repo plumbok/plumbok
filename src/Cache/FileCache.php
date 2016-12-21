@@ -32,52 +32,48 @@ class FileCache implements Cache
     }
 
     /**
-     * Checks cached file freshness
-     * @param string $filename Source file name
+     * Checks cached class freshness
+     * @param string $className Source class name
+     * @param int $time Source file modification time
      * @return bool
      */
-    public function isFresh(string $filename) : bool
+    public function isFresh(string $className, int $time) : bool
     {
-        if (false === file_exists($filename)) {
-            throw new \InvalidArgumentException("Unable to read source file: {$filename}");
-        }
-        $cacheFilename = $this->getCacheFilename($filename);
+        $cacheFilename = $this->getCacheFilename($className);
 
-        return file_exists($cacheFilename) && filemtime($cacheFilename) >= filemtime($filename);
+        return file_exists($cacheFilename) && filemtime($cacheFilename) >= $time;
     }
 
     /**
-     * @param string $filename
+     * @param string $className
      */
-    public function load(string $filename)
+    public function load(string $className)
     {
-        load($this->getCacheFilename($filename));
+        load($this->getCacheFilename($className));
     }
 
     /**
      * Write file to cache
-     * @param string $filename
+     * @param string $className
      * @param string $content
      */
-    public function write(string $filename, string $content)
+    public function write(string $className, string $content)
     {
-        $cacheFilename = $this->getCacheFilename($filename);
+        $cacheFilename = $this->getCacheFilename($className);
         file_put_contents($cacheFilename, "<?php\n{$content}\n");
     }
 
     /**
-     * @param string $filename
+     * @param string $className
      * @return string
      */
-    private function getCacheFilename(string $filename) : string
+    private function getCacheFilename(string $className) : string
     {
-        $fileInfo = new \SplFileInfo($filename);
-        $directory = $this->directory . DIRECTORY_SEPARATOR . substr(md5($fileInfo->getPath()), 0, 8);
-        if ((false == file_exists($directory)) && (false == is_dir($directory))) {
-            mkdir($directory, 0777, true);
+        if ((false == file_exists($this->directory)) && (false == is_dir($this->directory))) {
+            mkdir($this->directory, 0777, true);
         }
 
-        return $directory . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
+        return $this->directory . DIRECTORY_SEPARATOR . str_replace('\\', '.', $className) . '.php';
     }
 }
 

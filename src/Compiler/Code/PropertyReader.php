@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -6,7 +6,6 @@
  * Time: 17:31
  */
 namespace Plumbok\Compiler\Code;
-
 
 use Doctrine\Common\Annotations\DocParser;
 use phpDocumentor\Reflection\DocBlock;
@@ -16,6 +15,11 @@ use phpDocumentor\Reflection\Types\Mixed;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property as ClassProperty;
 
+/**
+ * Class PropertyReader
+ * @package Plumbok\Compiler\Code
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
+ */
 class PropertyReader
 {
     /**

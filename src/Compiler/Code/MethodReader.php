@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -9,12 +9,11 @@ namespace Plumbok\Compiler\Code;
 
 use Doctrine\Common\Annotations\DocParser;
 use phpDocumentor\Reflection\Types\Context;
-use PhpParser\Node\Stmt\ClassMethod;
 
 /**
  * Class MethodReader
  * @package Plumbok\Compiler\Code
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class MethodReader
 {

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -16,7 +16,7 @@ use PhpParser\Node\Stmt\Class_;
 /**
  * Class ClassReader
  * @package Plumbok\Compiler\Code
- * @author Michał Brzuchalski <m.brzuchalski@madkom.pl>
+ * @author Michał Brzuchalski <michal.brzuchalski@gmail.com>
  */
 class ClassReader
 {
