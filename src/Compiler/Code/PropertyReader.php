@@ -81,7 +81,7 @@ class PropertyReader
                         $setter = $method->name;
                     }
                 }
-                $properties[] = new Property($prop->name, $type ?? new Mixed(), $setter, $this->readAnnotations($property));
+                $properties[] = new Property($prop->name, $type ?? new Mixed(), $prop->default !== null, $setter, $this->readAnnotations($property));
             }
         }
 

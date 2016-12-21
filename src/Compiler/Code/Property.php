@@ -25,6 +25,10 @@ class Property
      */
     private $type;
     /**
+     * @var boolean
+     */
+    private $hasDefaultValue = false;
+    /**
      * @var array
      */
     private $annotations = [];
@@ -37,15 +41,17 @@ class Property
      * Property constructor.
      * @param string $name
      * @param Type $type
+     * @param bool $hasDefaultValue
      * @param string $setter
      * @param array $annotations
      */
-    public function __construct($name, Type $type, string $setter, array $annotations)
+    public function __construct($name, Type $type, bool $hasDefaultValue, string $setter, array $annotations)
     {
         $this->name = $name;
         $this->type = $type;
         $this->annotations = $annotations;
         $this->setter = $setter;
+        $this->hasDefaultValue = $hasDefaultValue;
     }
 
     /**
@@ -78,5 +84,13 @@ class Property
     public function getSetter(): string
     {
         return $this->setter;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasDefaultValue(): bool
+    {
+        return $this->hasDefaultValue;
     }
 }

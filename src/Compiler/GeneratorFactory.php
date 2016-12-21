@@ -11,9 +11,11 @@ use phpDocumentor\Reflection\DocBlock\Serializer;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Plumbok\Compiler\Code\Property;
-use Plumbok\Compiler\Generator\AllArgsConstructor as AllArgsConstructorGenerator;
 use Plumbok\Compiler\Generator\Getter as GetterGenerator;
 use Plumbok\Compiler\Generator\Setter as SetterGenerator;
+use Plumbok\Compiler\Generator\AllArgsConstructor as AllArgsConstructorGenerator;
+use Plumbok\Compiler\Generator\RequiredArgsConstructor as RequiredArgsConstructorGenerator;
+use Plumbok\Compiler\Generator\NoArgsConstructor as NoArgsConstructorGenerator;
 
 /**
  * Class GeneratorFactory
@@ -79,6 +81,33 @@ class GeneratorFactory
         $generator->setClassName($className);
         $generator->setTypeContext($this->typeContext);
         $generator->setProperties(...$properties);
+
+        return $generator->generate();
+    }
+
+    /**
+     * @param string $className
+     * @param Property[] ...$properties
+     * @return Statements
+     */
+    public function generateRequiredArgsConstructor(string $className, Property ...$properties) : Statements
+    {
+        $generator = new RequiredArgsConstructorGenerator($this->docBlockSerializer);
+        $generator->setClassName($className);
+        $generator->setTypeContext($this->typeContext);
+        $generator->setProperties(...$properties);
+
+        return $generator->generate();
+    }
+
+    /**
+     * @param string $className
+     * @return Statements
+     */
+    public function generateNoArgsConstructor(string $className) : Statements
+    {
+        $generator = new NoArgsConstructorGenerator($this->docBlockSerializer);
+        $generator->setClassName($className);
 
         return $generator->generate();
     }
