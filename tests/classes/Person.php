@@ -8,11 +8,7 @@
 namespace Plumbok\Test;
 
 /**
- * Class Person
- *
- * @package Plumbok\Test
- * @author Michał Brzuchalski<m.brzuchalski@madkom.pl>
- * @Data
+ * @Data 
  */
 class Person
 {
@@ -39,5 +35,5 @@ class Person
      * @var int[]
      * @Getter @Setter
      */
-    private $favouriteNumbers;
+    private $favouriteNumbers = [1, 7, 14, 21, 28];
 }

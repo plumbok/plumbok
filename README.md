@@ -21,6 +21,8 @@ composer require plumbok/plumbok
 
 ## Usage
 
+### Using autoloader at runtime on develop
+
 Registering additional autoloader:
 
 ```php
@@ -34,8 +36,17 @@ Using annotations in class:
 ```php
 namespace Plumbok\Test;
 
+/**
+ * @Data
+ */
 class Person
 {
+    /**
+     * @var array
+     * @Getter @Setter
+     */
+    private $names = [];
+
     /**
      * Holds age
      * @var int
@@ -53,12 +64,7 @@ class Person
      * @var int[]
      * @Getter @Setter
      */
-    private $days;
-
-    /**
-     * @var array
-     */
-    private $names = [];
+    private $favouriteNumbers = [1, 7, 14, 21, 28];
 }
 ```
 
@@ -69,15 +75,25 @@ additional docblock ennotations (tags) in PhpDocumentor style.
 namespace Plumbok\Test;
 
 /**
- * @method int getAge() 
- * @method void setAge(int $age) 
- * @method \DateTime getBirthdate() 
- * @method void setBirthdate(\DateTime $birthdate) 
- * @method int[] getDays() 
- * @method void setDays(int[] $days) 
+ * @Data 
+ * @method void __construct(int $age, \DateTime $birthdate)
+ * @method array getNames()
+ * @method void setNames(array $names)
+ * @method int getAge()
+ * @method void setAge(int $age)
+ * @method \DateTime getBirthdate()
+ * @method void setBirthdate(\DateTime $birthdate)
+ * @method int[] getFavouriteNumbers()
+ * @method void setFavouriteNumbers(int[] $favouriteNumbers)
  */
 class Person
 {
+    /**
+     * @var array
+     * @Getter @Setter
+     */
+    private $names = [];
+
     /**
      * Holds age
      * @var int
@@ -95,12 +111,7 @@ class Person
      * @var int[]
      * @Getter @Setter
      */
-    private $days;
-
-    /**
-     * @var array
-     */
-    private $names = [];
+    private $favouriteNumbers = [1, 7, 14, 21, 28];
 }
 ```
 
@@ -110,12 +121,20 @@ Second step is including generated code which looks like:
 ```php
 namespace Plumbok\Test;
 
+/**
+ * @Data 
+ */
 class Person
 {
     /**
+     * @var array
+     * @Getter @Setter
+     */
+    private $names = [];
+    /**
      * Holds age
      * @var int
-     * @Getter() @Setter
+     * @Getter @Setter
      */
     private $age;
     /**
@@ -127,11 +146,37 @@ class Person
      * @var int[]
      * @Getter @Setter
      */
-    private $days;
+    private $favouriteNumbers = [1, 7, 14, 21, 28];
     /**
-     * @var array
+     * Person constructor.
+     *
+     * @param int $age
+     * @param \DateTime $birthdate
      */
-    private $names = [];
+    public function __construct(int $age, \DateTime $birthdate)
+    {
+        $this->age = $age;
+        $this->birthdate = $birthdate;
+    }
+    /**
+     * Retrieves names
+     *
+     * @return array 
+     */
+    public function getNames() : array
+    {
+        return $this->names;
+    }
+    /**
+     * Sets names
+     *
+     * @param array $names
+     * @return void 
+     */
+    public function setNames(array $names)
+    {
+        $this->names = $names;
+    }
     /**
      * Retrieves age
      *
@@ -171,38 +216,64 @@ class Person
         $this->birthdate = $birthdate;
     }
     /**
-     * Retrieves days
+     * Retrieves favouriteNumbers
      *
      * @return int[] 
      */
-    public function getDays() : array
+    public function getFavouriteNumbers() : array
     {
-        return $this->days;
+        return $this->favouriteNumbers;
     }
     /**
-     * Sets days
+     * Sets favouriteNumbers
      *
-     * @param int[] $days
+     * @param int[] $favouriteNumbers
      * @return void 
      */
-    public function setDays(array $days)
+    public function setFavouriteNumbers(array $favouriteNumbers)
     {
-        $this->days = $days;
+        $this->favouriteNumbers = $favouriteNumbers;
     }
 }
 ```
 
+### Using prebuild command in CLI for test and prod
+
+Use CLI to run `plumbok` executable.
+
+```bash
+bin/plumbok [src-directory] [cache-directory]
+```
+
+> Note! This usage still requires adding autoload in bootstrap file!
+
+Using CLI to run `plumbok` executable and replace source code with generated one.
+
+```bash
+bin/plumbok [src-directory] --inline
+```
+
+Additional options:
+
+* `--ext`, `-e` pass file extension to look classes for, default `php`
+* `--no-tags` won't push `@method` tags into source file
+* `--inline` will replace source code with generated one
+* `-v|vv|vvv` increases verbosity
+* `--help`, `-h` display help
+
+---
+
 ## TODO
 
-* [ ] Replace eval with save to file and `include_once`
-* [ ] Add generated code caching for performance improvements
-* [ ] Add warmup command generating code for deployment
+* [x] Replace eval with save to file and `include_once`
+* [x] Add generated code caching for performance improvements
+* [x] Add warmup command generating code for deployment
 * [x] Implement `@Getter` annotation
 * [x] Implement `@Setter` annotation
 * [ ] Implement `@ToString` annotation
-* [ ] Implement `@AllArgsConstructor`, `@NoArgsConstructor`, `@RequiredArgsConstructor` annotation
+* [x] Implement `@AllArgsConstructor`, `@NoArgsConstructor`, `@RequiredArgsConstructor` annotation
 * [ ] Implement `@Equal` annotation
-* [ ] Implement `@Value`, `@Data` annotations
+* [x] Implement `@Value`, `@Data` annotations
 
 ## License
 
