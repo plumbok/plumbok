@@ -71,6 +71,10 @@ class Person
 After first run your original code will be little modified with 
 additional docblock ennotations (tags) in PhpDocumentor style.
 
+This is needed if your IDE doesn't have **Plumbok** plugin.
+
+![PhpStorm Autocomplete Support](doc/ide-autocomplete.png)
+
 ```php
 namespace Plumbok\Test;
 
