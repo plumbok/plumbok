@@ -16,9 +16,9 @@ install:
 
 script: bin/phpunit
 
-before_deploy:
-  - curl -LSs https://box-project.github.io/box2/installer.php | php
-  - box build
+  - "composer require kherge/box:~2.5"
+  - "composer update --prefer-lowest --no-dev"
+  - "./bin/box build"
 
 deploy:
   provider: releases
