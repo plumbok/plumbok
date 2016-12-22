@@ -18,7 +18,7 @@ script: bin/phpunit
 
 before_deploy:
   - curl -LSs https://box-project.github.io/box2/installer.php | php
-  - php -d phar.readonly=Off ${ which box } build
+  - box build
 
 deploy:
   provider: releases
