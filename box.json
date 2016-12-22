@@ -1,0 +1,27 @@
+{
+  "chmod": "0755",
+  "directories": [
+    "src"
+  ],
+  "finder": [
+    {
+      "exclude": [
+        "bin",
+        "phpunit",
+        "phpspec",
+        "sebastian"
+      ],
+      "in": [
+        "vendor"
+      ]
+    }
+  ],
+  "files": [
+    "LICENSE",
+    "README.md",
+    "bin/plumbok"
+  ],
+  "main": "bin/plumbok",
+  "output": "plumbok.phar",
+  "stub": true
+}
