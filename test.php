@@ -16,7 +16,6 @@ Autoload::register(__NAMESPACE__, new FileCache(__DIR__ . '/tests/cache'));
 
 $email = new Email('michal.brzuchalski@gmail.com', new UnannotatedClass());
 $email->getEmail();
-dump($email);
+
 $person = new Person();
 $person->setBirthdate(new \DateTime('12-02-1983'));
-dump($person);
