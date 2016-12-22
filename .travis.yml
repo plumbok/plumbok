@@ -7,7 +7,6 @@ php:
 
 env:
   - COMPOSER_FLAGS="--prefer-lowest"
-  - COMPOSER_FLAGS=""
 
 before_install:
   - travis_retry composer self-update
