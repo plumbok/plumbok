@@ -19,7 +19,7 @@ foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php
 }
 
 /** @var Application $app */
-$app = new class('Plumbok', '1.0') extends Application {
+$app = new class('Plumbok', '{version}') extends Application {
     /**
      * Gets the name of the command based on input.
      * @param InputInterface $input The input interface
