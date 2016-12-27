@@ -24,7 +24,7 @@ composer require plumbok/plumbok
 You can simply download a pre-compiled and ready-to-use version as a Phar to any directory.
 Simply download the latest `plumbok.phar` file from [releases](https://github.com/plumbok/plumbok/releases) page.
 
-You can also cimply run above command.
+You can also simply run above command.
 
 ```bash
 wget $( wget -qO- "https://api.github.com/repos/plumbok/plumbok/releases/latest" | sed -rn 's/.*"browser_download_url": "(.*)".*/\1/p' )
