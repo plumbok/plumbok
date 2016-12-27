@@ -13,15 +13,6 @@ use Plumbok\Test\Day\{
 
 /**
  * @Data 
- * @method void __construct(int $age, \Plumbok\Test\Day\DayOfMonth $nameDay)
- * @method array getNames()
- * @method void setNames(array $names)
- * @method int getAge()
- * @method void setAge(int $age)
- * @method \Plumbok\Test\Day\DayOfMonth getNameDay()
- * @method void setNameDay(\Plumbok\Test\Day\DayOfMonth $nameDay)
- * @method int[] getFavouriteNumbers()
- * @method void setFavouriteNumbers(int[] $favouriteNumbers)
  */
 class Person
 {

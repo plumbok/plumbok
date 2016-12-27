@@ -10,7 +10,6 @@ namespace Plumbok\Test\Day;
 
 /**
  * @RequiredArgsConstructor 
- * @method void __construct(int $day)
  */
 class DayOfMonth
 {
