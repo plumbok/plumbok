@@ -1,5 +1,5 @@
 <?php
-use Plumbok\Test\DayOfYear;
+use Plumbok\Test\Day\DayOfYear;
 
 /**
  * Created by PhpStorm.

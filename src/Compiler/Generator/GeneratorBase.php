@@ -53,18 +53,6 @@ abstract class GeneratorBase
 
     /**
      * @param string $propertyName
-     * @param Type $type
-     * @return Node\Param
-     * @deprecated
-     */
-    protected function createParam(string $propertyName, Type $type) : Node\Param
-    {
-        $type = $this->convertTypeToString($type);
-        return new Node\Param($propertyName, null, (string)$type);
-    }
-
-    /**
-     * @param string $propertyName
      * @return Node\Stmt\Return_
      */
     protected function createReturnProperty(string $propertyName) : Node\Stmt\Return_
@@ -98,21 +86,5 @@ abstract class GeneratorBase
                 new Node\Expr\Variable($propertyName)
             ]
         );
-    }
-
-    /**
-     * @param Type $type
-     * @return string
-     */
-    protected function convertTypeToString(Type $type) : string
-    {
-        if ($type instanceof Array_) {
-            return 'array';
-        }
-        if ($type instanceof Mixed) {
-            return '';
-        }
-
-        return (string)$type;
     }
 }

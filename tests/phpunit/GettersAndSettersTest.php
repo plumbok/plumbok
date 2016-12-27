@@ -1,5 +1,6 @@
 <?php
 use Doctrine\Common\Inflector\Inflector;
+use Plumbok\Test\Number;
 use Plumbok\Test\Person;
 
 /**
@@ -37,5 +38,13 @@ class GettersAndSettersTest extends PHPUnit_Framework_TestCase
             $setterExists = $reflection->hasMethod($setter = 'set' . ucfirst($property->getName()));
             $this->assertTrue($setterExists);
         }
+    }
+
+    public function testGetterOnNonAnnotatedClass()
+    {
+        $this->assertTrue(class_exists(Number::class));
+        $reflection = new ReflectionClass(Number::class);
+
+        $this->assertTrue($reflection->hasMethod('getValue'));
     }
 }
