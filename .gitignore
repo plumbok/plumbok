@@ -1,5 +1,5 @@
 bin/*
-!bin/plumbok
+!bin/plumbok*
 vendor
 composer.lock
 tests/cache/*

@@ -14,11 +14,12 @@ before_install:
 install:
   - composer update $COMPOSER_FLAGS --no-interaction
 
-script: bin/phpunit
-
-  - "composer require kherge/box:~2.5"
-  - "composer update --prefer-lowest --no-dev"
-  - "./bin/box build"
+script:
+  - "bin/phpunit"
+  - "composer update --no-dev"
+  - "wget https://github.com/clue/phar-composer/releases/download/v1.0.0/phar-composer.phar"
+  - "chmod +x phar-composer.phar"
+  - "php -d phar.readonly=Off phar-composer.phar build"
 
 deploy:
   provider: releases
