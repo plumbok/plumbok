@@ -1,39 +1,27 @@
 language: php
-
 php:
-  - '7.0'
-  - '7.1'
-  - nightly
-
-env:
-  - COMPOSER_FLAGS="--prefer-lowest"
-
+- '7.0'
+- '7.1'
+- nightly
 before_install:
-  - travis_retry composer self-update
-
+- travis_retry composer self-update
 install:
-  - composer update $COMPOSER_FLAGS --no-interaction
-
+- composer update --prefer-lowest --no-interaction
 script:
-  - "bin/phpunit"
-  - "composer update --no-dev"
-  - "wget https://github.com/clue/phar-composer/releases/download/v1.0.0/phar-composer.phar"
-  - "chmod +x phar-composer.phar"
-  - "php -d phar.readonly=Off phar-composer.phar build"
-
+- bin/phpunit
+- composer update --no-dev
+- wget https://github.com/clue/phar-composer/releases/download/v1.0.0/phar-composer.phar
+- chmod +x phar-composer.phar
+- php -d phar.readonly=Off phar-composer.phar build
 deploy:
   provider: releases
+  api_key:
+    secure: rjs5H/+mHu/QHFJPNI2ooMgww8XWq1fWL5k7eUAFooHUhjZ/a7G99Cd81b3kRLe8Pl9xBZNuNzZ4pp8EjgGucIGzmE/TQzBcch+2lMSIyBb0OG3POKkuKTphIVsrfjeYXQPzv1/DWK/4hgF+hQyx6IJk1hr9rfuXrunNZbzOQnCKAGOsICqfq9H8VP6N+donz1/DooBLp/4z4RB6Y7/O5rqvdCGMpZf68DcObG/swAuv9yFf7hw4S4GSgsW44iWj0/GB8+mUEaT+QYNI8iAeAO7c0PZGCDBUpTZkb0wi8/h3AmI6RaEO5ADNdWHApEy/FppYK9RchA2rk2PznT1CEZDneHaCDYvguX2HgqnReDxOd3aQjvGXMGKB/H4gVlLUVzWXfH22Q2FuuYWhdEuzLZONlQxbWid5H2sB76s1BUMmnB0tIkvJ/06GInL2rSpVICUgbGcdRF3EPpadZOydWzkFnEdPQYOU9t0DH+ZSawWPPGYdR7UfCAMPBh3ZNTiUW9dyFEACqJkGpU/PhWOEwwnWHhGqmhtvruGyDb36JGa0yBG18uCegJn090vYQ3dgoL9A/qbi5Sia2vpKq4RijqCp1L5yLE6/43t0SxdX+HO2p6fpfSaiPA/DvjDnQ46TovpUkvKKc6qjwpjcJDlr68tClYSOpjeEK5XPa9HnAfM=
   file: plumbok.phar
-  user: brzuchal
-  password:
-    secure: JNZOzgKqUYdcvvGVHn1Si8g2tXyXvgwXL5wmbL54gL2sdF+offEMpv3+vU1dswAoXD/H+/R+nDdAKTOIaOfRfNFqZjxYz/hxZzyAwePIj7FYtc/Adtf7JYc77sr3nRgg/0h1NiZC5ntSfh0nmZgE8ThdIARDxO2J+RbLAdX4FP/Kt7MIYq6+kWTYnuxpcJej6+tK919dJ2/ZDe9P6uB7r4WL3kP9L1cKYoqqQ+qZrBFix6YirQwxFDEDhWyM/fnyd6EinoaLJd7+0QPvbUa6Fm16XiuuZGmhETBe8LK0RS5F1PUdBiqeKKOGrHF0jsO3XHFpQ04xcrrdit+AKuP49m/6zwQWO0g1Suq+iVSo99jl1jaAb0wdPWT1V0/aOtCexfXm6KH7syYe+9T6OW+ujbhXhKrdz/u5e2UD7Ur1OcA17IWF4nIYWm3Js1oI4YTUCc0+EtVDLflk+nIn223l25qZCQG6dDcx8uZnxWwNtt944tjnQ7RnvEWYCzTzh7CIc05c8nLgkfDGxhDWX+MbjjcwU9sJsUH9hjn9gQnp81cJt988EAQhWLWYtd9B14cfjaprAweqRXj/AzkJrdeZTIbEzMjsFwULcWYnuCLHniRi3lS1IYsQMvr9lMA1g11A3ToODJWLlx26CeynWHdLcwTBMHZ9WdLf59amQBz+HPI=
-  skip_cleanup: true
   on:
     repo: plumbok/plumbok
     php: 7.0
     tags: true
-    condition: "$COMPOSER_FLAGS = --prefer-lowest"
-
 notifications:
   on_success: never
   on_failure: always
