@@ -46,7 +46,7 @@ class EqualTo extends GeneratorBase
             [
                 'flags' => Node\Stmt\Class_::MODIFIER_PUBLIC,
                 'params' => [new Node\Param('other')],
-                'statements' => [
+                'stmts' => [
                     new Node\Stmt\Return_(new Node\Expr\BinaryOp\BooleanAnd(
                         new Node\Expr\BinaryOp\Equal(
                             new Node\Expr\FuncCall(new Node\Name('get_class'), [new Node\Expr\Variable('other')]),

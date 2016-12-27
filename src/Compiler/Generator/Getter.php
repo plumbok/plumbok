@@ -42,7 +42,7 @@ class Getter extends GeneratorBase
         $result->add(new Node\Stmt\ClassMethod(
             $functionName, [
                 'flags' => Class_::MODIFIER_PUBLIC,
-                'statements' => [$this->createReturnProperty($this->propertyName)],
+                'stmts' => [$this->createReturnProperty($this->propertyName)],
                 'returnType' => $this->resolveType($this->type) ?: null,
             ],[
                 'comments' => [$this->createComment($docBlock)],

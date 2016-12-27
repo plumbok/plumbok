@@ -43,7 +43,7 @@ class Setter extends GeneratorBase
             $functionName, [
                 'flags' => Class_::MODIFIER_PUBLIC,
                 'params' => [new Node\Param($this->propertyName, null, $this->resolveType($this->type))],
-                'statements' => [$this->createPropertyMutation($this->propertyName)],
+                'stmts' => [$this->createPropertyMutation($this->propertyName)],
                 'returnType' => PHP_VERSION_ID < 700100 ? null : 'void',
             ], [
                 'comments' => [$this->createComment($docBlock)],

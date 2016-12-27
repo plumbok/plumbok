@@ -47,7 +47,7 @@ class AllArgsConstructor extends GeneratorBase
                         $this->resolveType($property->getType())
                     );
                 }, $this->properties),
-                'statements' => array_map(function (Property $property) {
+                'stmts' => array_map(function (Property $property) {
                     return $this->createPropertyMutation($property->getName(), $property->getSetter());
                 }, $this->properties),
             ],[

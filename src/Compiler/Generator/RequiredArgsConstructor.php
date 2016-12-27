@@ -51,7 +51,7 @@ class RequiredArgsConstructor extends GeneratorBase
                 }, array_filter($this->properties, function (Property $property) {
                     return !$property->hasDefaultValue();
                 })),
-                'statements' => array_map(function (Property $property) {
+                'stmts' => array_map(function (Property $property) {
                     return $this->createPropertyMutation($property->getName(), $property->getSetter());
                 }, array_filter($this->properties, function (Property $property) {
                     return !$property->hasDefaultValue();
