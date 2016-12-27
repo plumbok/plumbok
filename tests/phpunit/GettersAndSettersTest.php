@@ -17,9 +17,7 @@ class GettersAndSettersTest extends PHPUnit_Framework_TestCase
 
     public function testGettersGeneration()
     {
-        $loaded = class_exists(Person::class);
-        $this->assertTrue($loaded, 'Autoloading failed');
-
+        $this->assertTrue(class_exists(Person::class), 'Autoloading failed');
         $reflection = new ReflectionClass(Person::class);
 
         foreach ($reflection->getProperties() as $property) {
@@ -32,9 +30,7 @@ class GettersAndSettersTest extends PHPUnit_Framework_TestCase
 
     public function testSettersGeneration()
     {
-        $loaded = class_exists(Person::class);
-        $this->assertTrue($loaded, 'Autoloading failed');
-
+        $this->assertTrue(class_exists(Person::class));
         $reflection = new ReflectionClass(Person::class);
 
         foreach ($reflection->getProperties() as $property) {

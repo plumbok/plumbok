@@ -56,6 +56,5 @@ class AllArgsConstructor extends GeneratorBase
         ));
 
         return $result;
-
     }
 }

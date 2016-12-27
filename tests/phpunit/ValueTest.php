@@ -15,28 +15,9 @@ class ValueTest extends PHPUnit_Framework_TestCase
         Plumbok\Autoload::register('Plumbok\\Test');
     }
 
-//    public function testAllArgsConstructorGeneration()
-//    {
-//        $loaded = class_exists(Email::class);
-//        $this->assertTrue($loaded, 'Autoloading failed');
-//
-//        $reflection = new ReflectionClass(Email::class);
-//        $reflectionConstructor = $reflection->getMethod('__construct');
-//
-//        $unMatchedArgsCount = count($reflection->getProperties());
-//        foreach ($reflectionConstructor->getParameters() as $reflectionParameter) {
-//            if ($reflection->hasProperty($reflectionParameter->getName())) {
-//                --$unMatchedArgsCount;
-//            }
-//        }
-//        $this->assertEquals(0, $unMatchedArgsCount, 'Unitialized by constructor properties exists');
-//    }
-
     public function testGettersGeneration()
     {
-        $loaded = class_exists(Email::class);
-        $this->assertTrue($loaded, 'Autoloading failed');
-
+        $this->assertTrue(class_exists(Email::class));
         $reflection = new ReflectionClass(Email::class);
 
         foreach ($reflection->getProperties() as $property) {

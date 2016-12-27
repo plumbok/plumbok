@@ -58,6 +58,7 @@ class Compiler
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'AllArgsConstructor.php');
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'RequiredArgsConstructor.php');
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'NoArgsConstructor.php');
+        AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'Equal.php');
         $this->docBlockSerializer = new Serializer();
         $this->nodeFinder = new NodeFinder();
     }
@@ -113,6 +114,9 @@ class Compiler
             $statements->merge($generatorFactory->generateRequiredArgsConstructor($class->name, ...$properties));
         } elseif ($classContext->isNoArgsConstructor()) {
             $statements->merge($generatorFactory->generateNoArgsConstructor($class->name));
+        }
+        if ($classContext->isEqual()) {
+            $statements->merge($s = $generatorFactory->generateEqualTo($class->name, ...$properties));
         }
         foreach ($properties as $property) {
             if ($classContext->isAllPropertyGetters()) {

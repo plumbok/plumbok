@@ -16,6 +16,7 @@ use Plumbok\Compiler\Generator\Setter as SetterGenerator;
 use Plumbok\Compiler\Generator\AllArgsConstructor as AllArgsConstructorGenerator;
 use Plumbok\Compiler\Generator\RequiredArgsConstructor as RequiredArgsConstructorGenerator;
 use Plumbok\Compiler\Generator\NoArgsConstructor as NoArgsConstructorGenerator;
+use Plumbok\Compiler\Generator\EqualTo as EqualToGenerator;
 
 /**
  * Class GeneratorFactory
@@ -108,6 +109,21 @@ class GeneratorFactory
     {
         $generator = new NoArgsConstructorGenerator($this->docBlockSerializer);
         $generator->setClassName($className);
+
+        return $generator->generate();
+    }
+
+    /**
+     * @param string $className
+     * @param Property[] ...$properties
+     * @return Statements
+     */
+    public function generateEqualTo(string $className, Property ...$properties) : Statements
+    {
+        $generator = new EqualToGenerator($this->docBlockSerializer);
+        $generator->setClassName($className);
+        $generator->setTypeContext($this->typeContext);
+        $generator->setProperties(...$properties);
 
         return $generator->generate();
     }

@@ -17,5 +17,16 @@ Autoload::register(__NAMESPACE__, new FileCache(__DIR__ . '/tests/cache'));
 $email = new Email('michal.brzuchalski@gmail.com', new UnannotatedClass());
 $email->getEmail();
 
-$person = new Person();
+$email = new Email('michal.brzuchalski@gmail.com', new UnannotatedClass());
+$email->getEmail();
+
+
+$person = new Person(34, \DateTime::createFromFormat('Y-m-d', '1983-02-12'));
 $person->setBirthdate(new \DateTime('12-02-1983'));
+
+
+$dayOfYear = new Day\DayOfYear(120, 2016);
+
+$otherDayOfYear = new Day\DayOfYear(120, 2016);
+
+dump($dayOfYear, $otherDayOfYear, $dayOfYear->equalTo($otherDayOfYear));
