@@ -8,6 +8,7 @@
  */
 namespace Plumbok;
 
+use Plumbok\Command\CompileCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\HelpCommand;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -25,33 +26,39 @@ foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php
 /** @var Application $app */
 $app = new class('Plumbok', '1.0') extends Application {
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
+     * Gets the name of the command based on input.
+     * @param InputInterface $input The input interface
+     * @return string The command name
      */
-    public function doRun(InputInterface $input, OutputInterface $output)
+    protected function getCommandName(InputInterface $input)
     {
-        if (true === $input->hasParameterOption(array('--version', '-V'), true)) {
-            $output->writeln($this->getLongVersion());
-
-            return 0;
-        }
-        if (true === $input->hasParameterOption(array('--help', '-h'), true)) {
-            $input = new ArrayInput(array('command_name' => 'compile'));
-
-            return $this->doRunCommand($this->find('help'), $input, $output);
-        }
-        $input = new ArgvInput(array_merge(array($_SERVER['argv'][0], 'compile'), array_slice($_SERVER['argv'], 1)));
-
-        return $this->doRunCommand($this->find('compile'), $input, $output);
+        return 'compile';
     }
 
     /**
-     * @return array
+     * Gets the default commands that should always be available.
+     * @return array An array of default Command instances
      */
     protected function getDefaultCommands()
     {
-        return array(new HelpCommand(), new Command\CompileCommand());
+        // Keep the core default commands to have the HelpCommand
+        // which is used when using the --help option
+        $defaultCommands = parent::getDefaultCommands();
+        $defaultCommands[] = new CompileCommand();
+
+        return $defaultCommands;
+    }
+
+    /**
+     * Overridden so that the application doesn't expect the command
+     * name to be the first argument.
+     */
+    public function getDefinition()
+    {
+        $inputDefinition = parent::getDefinition();
+        $inputDefinition->setArguments();
+
+        return $inputDefinition;
     }
 };
 $app->run();

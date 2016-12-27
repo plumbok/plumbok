@@ -87,12 +87,12 @@ class CompileCommand extends Command
             }
             $output->writeln("[{$filepath}] <info>Found class:</info> {$className}", Output::VERBOSITY_VERBOSE);
             if (!$inline && $cache->isFresh($className, filemtime($filepath))) {
-                $output->writeln("[{$filepath}] <error>File is up to date omitting file.</error>", Output::VERBOSITY_VERY_VERBOSE);
+                $output->writeln("[{$filepath}] <error>File is up to date omitting file.</error>", Output::VERBOSITY_VERBOSE);
             } else {
                 if ($inline) {
-                    $output->writeln("[{$filepath}] <info>Freshness check omitted.</info>", Output::VERBOSITY_VERY_VERBOSE);
+                    $output->writeln("[{$filepath}] <info>Freshness check omitted.</info>", Output::VERBOSITY_VERBOSE);
                 }
-                $output->writeln("[{$filepath}] <info>Starting compilation...</info>", Output::VERBOSITY_VERY_VERBOSE);
+                $output->writeln("[{$filepath}] <info>Starting compilation...</info>", Output::VERBOSITY_VERBOSE);
                 $nodes = $compiler->compile($filename);
                 if (count($nodes)) {
                     if (!$noTags && !$inline) {
@@ -104,9 +104,9 @@ class CompileCommand extends Command
                     } else {
                         $cache->write($className, $serializer->prettyPrint($nodes));
                     }
-                    $output->writeln("[{$filepath}] <info>Successfully compiled.</info>", Output::VERBOSITY_VERY_VERBOSE);
+                    $output->writeln("[{$filepath}] <info>Successfully compiled.</info>", Output::VERBOSITY_VERBOSE);
                 } else {
-                    $output->writeln("[{$filepath}] <error>No annotations, omitting file.</error>", Output::VERBOSITY_VERY_VERBOSE);
+                    $output->writeln("[{$filepath}] <error>No annotations, omitting file.</error>", Output::VERBOSITY_VERBOSE);
                 }
             }
         }
