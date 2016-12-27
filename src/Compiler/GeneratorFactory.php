@@ -17,6 +17,7 @@ use Plumbok\Compiler\Generator\AllArgsConstructor as AllArgsConstructorGenerator
 use Plumbok\Compiler\Generator\RequiredArgsConstructor as RequiredArgsConstructorGenerator;
 use Plumbok\Compiler\Generator\NoArgsConstructor as NoArgsConstructorGenerator;
 use Plumbok\Compiler\Generator\EqualTo as EqualToGenerator;
+use Plumbok\Compiler\Generator\ToString as ToStringGenerator;
 
 /**
  * Class GeneratorFactory
@@ -124,6 +125,14 @@ class GeneratorFactory
         $generator->setClassName($className);
         $generator->setTypeContext($this->typeContext);
         $generator->setProperties(...$properties);
+
+        return $generator->generate();
+    }
+
+    public function generateToString(string $propertyName)
+    {
+        $generator = new ToStringGenerator($this->docBlockSerializer);
+        $generator->setPropertyName($propertyName);
 
         return $generator->generate();
     }

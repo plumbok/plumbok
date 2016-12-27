@@ -9,6 +9,7 @@ namespace Plumbok\Test;
 
 /**
  * @Value 
+ * @ToString (property = "email")
  */
 class Email
 {

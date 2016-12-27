@@ -12,7 +12,9 @@ use Plumbok\Annotation\Data;
 use Plumbok\Annotation\Equal;
 use Plumbok\Annotation\NoArgsConstructor;
 use Plumbok\Annotation\RequiredArgsConstructor;
+use Plumbok\Annotation\ToString;
 use Plumbok\Annotation\Value;
+use Plumbok\Compiler\Code\Property;
 
 /**
  * Class Context
@@ -63,6 +65,10 @@ class Context
      * @var bool Holds equality comparator creation flag
      */
     private $equal = false;
+    /**
+     * @var string Holds property returned by toString()
+     */
+    private $toString;
 
     /**
      * Context constructor.
@@ -78,6 +84,7 @@ class Context
                 case NoArgsConstructor::class:
                 case RequiredArgsConstructor::class:
                 case Equal::class:
+                case ToString::class:
                     if ($this->checkNonExcludingUsage($annotation)) {
                         $this->apply($annotation);
                     }
@@ -86,44 +93,49 @@ class Context
         }
     }
 
-    private function applyValue($annotation)
+    private function applyValue(Value $annotation)
     {
         $this->allArgsConstructor = true;
         $this->allPropertyGetters = true;
         $this->equal = true;
     }
 
-    private function applyData($annotation)
+    private function applyData(Data $annotation)
     {
         $this->requiredArgsConstructor = true;
         $this->allPropertyGetters = true;
         $this->allPropertySetters = true;
     }
 
-    private function applyAllArgsConstructor($annotation)
+    private function applyAllArgsConstructor(AllArgsConstructor $annotation)
     {
         $this->allArgsConstructor = true;
         $this->noArgsConstructor = false;
         $this->requiredArgsConstructor = false;
     }
 
-    private function applyNoArgsConstructor($annotation)
+    private function applyNoArgsConstructor(NoArgsConstructor $annotation)
     {
         $this->noArgsConstructor = true;
         $this->allArgsConstructor = false;
         $this->requiredArgsConstructor = false;
     }
 
-    private function applyRequiredArgsConstructor($annotation)
+    private function applyRequiredArgsConstructor(RequiredArgsConstructor $annotation)
     {
         $this->requiredArgsConstructor = true;
         $this->allArgsConstructor = false;
         $this->noArgsConstructor = false;
     }
 
-    private function applyEqual($annotation)
+    private function applyEqual(Equal $annotation)
     {
         $this->equal = true;
+    }
+
+    private function applyToString(ToString $annotation)
+    {
+        $this->toString = $annotation->property;
     }
 
     /**
@@ -135,6 +147,7 @@ class Context
      * @uses applyNoArgsConstructor
      * @uses applyRequiredArgsConstructor
      * @uses applyEqual
+     * @uses applyToString
      */
     private function apply($annotation)
     {
@@ -170,7 +183,7 @@ class Context
     /**
      * @return boolean
      */
-    public function isAllArgsConstructor(): bool
+    public function requiresAllArgsConstructor(): bool
     {
         return $this->allArgsConstructor;
     }
@@ -178,7 +191,7 @@ class Context
     /**
      * @return boolean
      */
-    public function isNoArgsConstructor(): bool
+    public function requiresNoArgsConstructor(): bool
     {
         return $this->noArgsConstructor;
     }
@@ -186,7 +199,7 @@ class Context
     /**
      * @return boolean
      */
-    public function isRequiredArgsConstructor(): bool
+    public function requiresRequiredArgsConstructor(): bool
     {
         return $this->requiredArgsConstructor;
     }
@@ -194,7 +207,7 @@ class Context
     /**
      * @return boolean
      */
-    public function isAllPropertyGetters(): bool
+    public function requiresAllPropertyGetters(): bool
     {
         return $this->allPropertyGetters;
     }
@@ -202,7 +215,7 @@ class Context
     /**
      * @return boolean
      */
-    public function isAllPropertySetters(): bool
+    public function requiresAllPropertySetters(): bool
     {
         return $this->allPropertySetters;
     }
@@ -210,8 +223,16 @@ class Context
     /**
      * @return boolean
      */
-    public function isEqual(): bool
+    public function requiresEqualTo(): bool
     {
         return $this->equal;
+    }
+
+    /**
+     * @return bool
+     */
+    public function requiresToString(Property $property) : bool
+    {
+        return !empty($this->toString) && $this->toString === $property->getName();
     }
 }

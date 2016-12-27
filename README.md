@@ -56,6 +56,7 @@ namespace Plumbok\Test;
 
 /**
  * @Data
+ * @ToString(property = "email")
  */
 class Person
 {
@@ -64,6 +65,12 @@ class Person
      * @Getter @Setter
      */
     private $names = [];
+    
+    /**
+     * @var string
+     * @Getter @Setter
+     */
+    private $email;
 
     /**
      * Holds age
@@ -98,9 +105,13 @@ namespace Plumbok\Test;
 
 /**
  * @Data 
+ * @ToString(property = "email")
  * @method void __construct(int $age, \DateTime $birthdate)
  * @method array getNames()
  * @method void setNames(array $names)
+ * @method string getEmail()
+ * @method void setEmail(string $email)
+ * @method string toString()
  * @method int getAge()
  * @method void setAge(int $age)
  * @method \DateTime getBirthdate()
@@ -115,7 +126,13 @@ class Person
      * @Getter @Setter
      */
     private $names = [];
-
+    
+    /**
+     * @var string
+     * @Getter @Setter
+     */
+    private $email;
+    
     /**
      * Holds age
      * @var int
@@ -145,6 +162,7 @@ namespace Plumbok\Test;
 
 /**
  * @Data 
+ * @ToString(property = "email")
  */
 class Person
 {
@@ -199,6 +217,38 @@ class Person
     {
         $this->names = $names;
     }
+    
+    /**
+     * Retrieves email
+     *
+     * @return string 
+     */
+    public function getEmail() : string
+    {
+        return $this->email;
+    }
+    
+    /**
+     * Sets email
+     *
+     * @param string $email string
+     * @return void
+     */
+    public function setEmail(string $email)
+    {
+        return $this->email = $email;
+    }
+    
+    /**
+     * Returns string from $email
+     *
+     * @return string 
+     */
+    public function toString() : string
+    {
+        return (string) $this->email;
+    }
+
     /**
      * Retrieves age
      *

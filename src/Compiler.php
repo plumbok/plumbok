@@ -59,6 +59,7 @@ class Compiler
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'RequiredArgsConstructor.php');
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'NoArgsConstructor.php');
         AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'Equal.php');
+        AnnotationRegistry::registerFile(__DIR__ . DIRECTORY_SEPARATOR . 'Annotation' . DIRECTORY_SEPARATOR . 'ToString.php');
         $this->docBlockSerializer = new Serializer();
         $this->nodeFinder = new NodeFinder();
     }
@@ -108,30 +109,33 @@ class Compiler
             $this->nodeFinder->findMethods(...$class->stmts)
         );
         $classContext = new Context($classReader->readAnnotations($class));
-        if ($classContext->isAllArgsConstructor()) {
+        if ($classContext->requiresAllArgsConstructor()) {
             $statements->merge($generatorFactory->generateAllArgsConstructor($class->name, ...$properties));
-        } elseif ($classContext->isRequiredArgsConstructor()) {
+        } elseif ($classContext->requiresRequiredArgsConstructor()) {
             $statements->merge($generatorFactory->generateRequiredArgsConstructor($class->name, ...$properties));
-        } elseif ($classContext->isNoArgsConstructor()) {
+        } elseif ($classContext->requiresNoArgsConstructor()) {
             $statements->merge($generatorFactory->generateNoArgsConstructor($class->name));
         }
-        if ($classContext->isEqual()) {
-            $statements->merge($s = $generatorFactory->generateEqualTo($class->name, ...$properties));
+        if ($classContext->requiresEqualTo()) {
+            $statements->merge($generatorFactory->generateEqualTo($class->name, ...$properties));
         }
         foreach ($properties as $property) {
-            if ($classContext->isAllPropertyGetters()) {
+            if ($classContext->requiresAllPropertyGetters()) {
                 $statements->merge($generatorFactory->generateGetter($property->getName(), $property->getType()));
             }
-            if ($classContext->isAllPropertySetters()) {
+            if ($classContext->requiresAllPropertySetters()) {
                 $statements->merge($generatorFactory->generateSetter($property->getName(), $property->getType()));
             }
             foreach ($property->getAnnotations() as $annotation) {
-                if ($annotation instanceof Getter && !$classContext->isAllPropertyGetters()) {
+                if ($annotation instanceof Getter && !$classContext->requiresAllPropertyGetters()) {
                     $statements->merge($generatorFactory->generateGetter($property->getName(), $property->getType()));
                 }
-                if ($annotation instanceof Setter && !$classContext->isAllPropertySetters()) {
+                if ($annotation instanceof Setter && !$classContext->requiresAllPropertySetters()) {
                     $statements->merge($generatorFactory->generateSetter($property->getName(), $property->getType()));
                 }
+            }
+            if ($classContext->requiresToString($property)) {
+                $statements->merge($generatorFactory->generateToString($property->getName()));
             }
         }
         // remove @method tags from doc comment
