@@ -9,6 +9,7 @@ namespace Plumbok\Test\Day;
 
 /**
  * @NoArgsConstructor 
+ * @method void __construct()
  */
 class DayOfWeek {
     /**

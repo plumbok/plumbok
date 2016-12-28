@@ -10,6 +10,12 @@ namespace Plumbok\Test;
 /**
  * @Value 
  * @ToString (property = "email")
+ * @method void __construct(string $email, \Plumbok\Test\UnannotatedClass $someObject)
+ * @method bool equalTo(object $other)
+ * @method string getEmail()
+ * @method string toString()
+ * @method \Plumbok\Test\UnannotatedClass getSomeObject()
+ * @method void setSomeObject(\Plumbok\Test\UnannotatedClass $someObject)
  */
 class Email
 {

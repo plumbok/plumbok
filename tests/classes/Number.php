@@ -7,6 +7,11 @@
  */
 namespace Plumbok\Test;
 
+/**
+ * Class Number
+ *
+ * @method int getValue()
+ */
 class Number
 {
     /**
