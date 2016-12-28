@@ -36,7 +36,7 @@ class Getter extends GeneratorBase
         );
         $functionName = 'get' . ucfirst($this->propertyName);
         if (is_a($this->type, Boolean::class)) {
-            $functionName = 'is' . ucfirst(Inflector::singularize($this->propertyName));
+            $functionName = 'is' . ucfirst($this->propertyName);
         }
         $result = new Statements();
         $result->add(new Node\Stmt\ClassMethod(
