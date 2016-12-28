@@ -9,9 +9,9 @@ namespace Plumbok\Annotation;
 
 /**
  * @Annotation
- * @Target({"PROPERTY"})
+ * @Target({"CLASS"})
  */
-final class Equal
+final class EqualTo
 {
 
 }

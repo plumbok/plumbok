@@ -9,7 +9,7 @@ namespace Plumbok\Compiler;
 
 use Plumbok\Annotation\AllArgsConstructor;
 use Plumbok\Annotation\Data;
-use Plumbok\Annotation\Equal;
+use Plumbok\Annotation\EqualTo;
 use Plumbok\Annotation\NoArgsConstructor;
 use Plumbok\Annotation\RequiredArgsConstructor;
 use Plumbok\Annotation\ToString;
@@ -64,7 +64,7 @@ class Context
     /**
      * @var bool Holds equality comparator creation flag
      */
-    private $equal = false;
+    private $equalTo = false;
     /**
      * @var string Holds property returned by toString()
      */
@@ -83,7 +83,7 @@ class Context
                 case AllArgsConstructor::class:
                 case NoArgsConstructor::class:
                 case RequiredArgsConstructor::class:
-                case Equal::class:
+                case EqualTo::class:
                 case ToString::class:
                     if ($this->checkNonExcludingUsage($annotation)) {
                         $this->apply($annotation);
@@ -97,7 +97,7 @@ class Context
     {
         $this->allArgsConstructor = true;
         $this->allPropertyGetters = true;
-        $this->equal = true;
+        $this->equalTo = true;
     }
 
     private function applyData(Data $annotation)
@@ -128,9 +128,9 @@ class Context
         $this->noArgsConstructor = false;
     }
 
-    private function applyEqual(Equal $annotation)
+    private function applyEqualTo(EqualTo $annotation)
     {
-        $this->equal = true;
+        $this->equalTo = true;
     }
 
     private function applyToString(ToString $annotation)
@@ -146,7 +146,7 @@ class Context
      * @uses applyAllArgsConstructor
      * @uses applyNoArgsConstructor
      * @uses applyRequiredArgsConstructor
-     * @uses applyEqual
+     * @uses applyEqualTo
      * @uses applyToString
      */
     private function apply($annotation)
@@ -225,7 +225,7 @@ class Context
      */
     public function requiresEqualTo(): bool
     {
-        return $this->equal;
+        return $this->equalTo;
     }
 
     /**

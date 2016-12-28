@@ -35,7 +35,7 @@ class EqualTo extends GeneratorBase
     public function generate(): Compiler\Statements
     {
         $docBlock = new DocBlock(
-            'Compares two ' . $this->className . ' objects are equal',
+            'Compares two ' . $this->className . ' objects are equalTo',
             null,
             [new Param('other', new Object_()), new Return_(new Boolean())],
             $this->typeContext
