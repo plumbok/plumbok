@@ -8,7 +8,7 @@ use Plumbok\Test\Email;
  * Date: 12.12.16
  * Time: 14:23
  */
-class ValueTest extends PHPUnit_Framework_TestCase
+class ValueTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

@@ -7,7 +7,7 @@ use Plumbok\Test\Email;
  * Date: 26.12.16
  * Time: 07:09
  */
-class ToStringTest extends PHPUnit_Framework_TestCase
+class ToStringTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

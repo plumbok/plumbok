@@ -9,7 +9,7 @@ use Plumbok\Test\Day\DayOfYear;
  * Date: 26.12.16
  * Time: 06:10
  */
-class ConstructorTest extends PHPUnit_Framework_TestCase
+class ConstructorTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\NullOutput;
 
-class CompileCommandTest extends PHPUnit_Framework_TestCase
+class CompileCommandTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
