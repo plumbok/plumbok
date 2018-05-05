@@ -1,7 +1,7 @@
 language: php
 php:
-- '7.0'
 - '7.1'
+- '7.2'
 before_install:
 - travis_retry composer self-update
 install:
@@ -20,7 +20,7 @@ deploy:
   file: plumbok.phar
   on:
     repo: plumbok/plumbok
-    php: 7.0
+    php: 7.1
     tags: true
 notifications:
   on_success: never
