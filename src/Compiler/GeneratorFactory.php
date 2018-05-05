@@ -11,12 +11,12 @@ use phpDocumentor\Reflection\DocBlock\Serializer;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Plumbok\Compiler\Code\Property;
-use Plumbok\Compiler\Generator\Getter as GetterGenerator;
-use Plumbok\Compiler\Generator\Setter as SetterGenerator;
 use Plumbok\Compiler\Generator\AllArgsConstructor as AllArgsConstructorGenerator;
-use Plumbok\Compiler\Generator\RequiredArgsConstructor as RequiredArgsConstructorGenerator;
-use Plumbok\Compiler\Generator\NoArgsConstructor as NoArgsConstructorGenerator;
 use Plumbok\Compiler\Generator\EqualTo as EqualToGenerator;
+use Plumbok\Compiler\Generator\Getter as GetterGenerator;
+use Plumbok\Compiler\Generator\NoArgsConstructor as NoArgsConstructorGenerator;
+use Plumbok\Compiler\Generator\RequiredArgsConstructor as RequiredArgsConstructorGenerator;
+use Plumbok\Compiler\Generator\Setter as SetterGenerator;
 use Plumbok\Compiler\Generator\ToString as ToStringGenerator;
 
 /**

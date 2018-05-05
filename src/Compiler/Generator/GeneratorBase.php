@@ -7,14 +7,13 @@
  */
 namespace Plumbok\Compiler\Generator;
 
-use Plumbok\Compiler;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Serializer;
-use phpDocumentor\Reflection\Type;
-use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Mixed;
 use PhpParser\Comment;
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Expression;
+use Plumbok\Compiler;
 
 /**
  * Class GeneratorBase
@@ -63,28 +62,29 @@ abstract class GeneratorBase
     /**
      * @param string $propertyName
      * @param string $propertySetter
-     * @return Node\Expr
+     * @return Expression
      */
-    protected function createPropertyMutation(string $propertyName, string $propertySetter = null) : Node\Expr
+    protected function createPropertyMutation(string $propertyName, string $propertySetter = null): Expression
     {
         // $this->{$propertyName} = $$propertyName;
         if (empty($propertySetter)) {
-            return new Node\Expr\Assign(
+            return new Expression(new Node\Expr\Assign(
                 new Node\Expr\PropertyFetch(
                     new Node\Expr\Variable('this'),
                     $propertyName
                 ),
                 new Node\Expr\Variable($propertyName)
+            )
             );
         }
 
         // $this->set{$propertyName}($$propertyName);
-        return new Node\Expr\MethodCall(
+        return new Expression(new Node\Expr\MethodCall(
             new Node\Expr\Variable('this'),
             $propertySetter,
             [
                 new Node\Expr\Variable($propertyName)
             ]
-        );
+        ));
     }
 }

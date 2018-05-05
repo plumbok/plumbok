@@ -7,10 +7,10 @@
  */
 namespace Plumbok\Compiler\Generator;
 
-use PhpParser\Node\Stmt\Class_;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Types\Void_;
 use PhpParser\Node;
+use PhpParser\Node\Stmt\Class_;
 use Plumbok\Compiler\Statements;
 
 /**
@@ -42,7 +42,7 @@ class Setter extends GeneratorBase
         $result->add(new Node\Stmt\ClassMethod(
             $functionName, [
                 'flags' => Class_::MODIFIER_PUBLIC,
-                'params' => [new Node\Param($this->propertyName, null, $this->resolveType($this->type))],
+                'params' => [new Node\Param(new Node\Expr\Variable($this->propertyName), null, $this->resolveType($this->type))],
                 'stmts' => [$this->createPropertyMutation($this->propertyName)],
                 'returnType' => PHP_VERSION_ID < 700100 ? null : 'void',
             ], [

@@ -42,7 +42,7 @@ class AllArgsConstructor extends GeneratorBase
                 'flags' => Node\Stmt\Class_::MODIFIER_PUBLIC,
                 'params' => array_map(function (Property $property) {
                     return new Node\Param(
-                        $property->getName(),
+                        new Node\Expr\Variable($property->getName()),
                         null,
                         $this->resolveType($property->getType())
                     );

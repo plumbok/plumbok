@@ -8,7 +8,6 @@
 namespace Plumbok\Compiler\Generator;
 
 use phpDocumentor\Reflection\Type;
-use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Context;
 

@@ -7,19 +7,19 @@
  */
 namespace Plumbok\Test;
 
-use Plumbok\Test\Day\{
-    DayOfMonth
-};
+use Plumbok\Annotation\Data;
+use Plumbok\Annotation\Getter;
+use Plumbok\Test\Day\DayOfMonth;
 
 /**
- * @Data 
- * @method void __construct(int $age, \Plumbok\Test\Day\DayOfMonth $nameDay)
+ * @Data ()
+ * @method void __construct(int $age, \Plumbok\Test\DayOfMonth $nameDay)
  * @method array getNames()
  * @method void setNames(array $names)
  * @method int getAge()
  * @method void setAge(int $age)
- * @method \Plumbok\Test\Day\DayOfMonth getNameDay()
- * @method void setNameDay(\Plumbok\Test\Day\DayOfMonth $nameDay)
+ * @method \Plumbok\Test\DayOfMonth getNameDay()
+ * @method void setNameDay(\Plumbok\Test\DayOfMonth $nameDay)
  * @method int[] getFavouriteNumbers()
  * @method void setFavouriteNumbers(int[] $favouriteNumbers)
  */

@@ -10,7 +10,6 @@ namespace Plumbok\Compiler\Generator;
 use phpDocumentor\Reflection\DocBlock;
 use PhpParser\Node;
 use Plumbok\Compiler;
-use Plumbok\Compiler\Code\Property;
 use Plumbok\Compiler\Statements;
 
 /**

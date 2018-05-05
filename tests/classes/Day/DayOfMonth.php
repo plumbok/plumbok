@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php
 /**
  * Created by PhpStorm.
  * User: brzuchal
@@ -9,7 +9,7 @@
 namespace Plumbok\Test\Day;
 
 /**
- * @RequiredArgsConstructor 
+ * @RequiredArgsConstructor
  * @method void __construct(int $day)
  */
 class DayOfMonth

@@ -122,12 +122,12 @@ class CompileCommand extends Command
         $nodes = $this->phpParser->parse(file_get_contents($filepath));
         foreach ($this->nodeFinder->findNamespaces(...$nodes) as $namespace) {
             foreach ($this->nodeFinder->findClasses(...$namespace->stmts) as $class) {
-                return (string)$namespace->name . '\\' . $class->name;
+                return (string)$namespace->name . '\\' . $class->name->name;
             }
         }
         if (empty($className)) {
             foreach ($this->nodeFinder->findClasses(...$nodes) as $class) {
-                return $class->name;
+                return $class->name->name;
             }
         }
 

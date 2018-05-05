@@ -9,8 +9,8 @@
 namespace Plumbok\Test\Day;
 
 /**
- * @AllArgsConstructor 
- * @EqualTo 
+ * @AllArgsConstructor
+ * @EqualTo
  * @method void __construct(int $day, int $year)
  * @method bool equalTo(object $other)
  */
