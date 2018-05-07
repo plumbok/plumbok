@@ -7,11 +7,10 @@
  */
 namespace Plumbok\Compiler\Generator;
 
-use PhpParser\Node\Stmt\Class_;
-use Doctrine\Common\Inflector\Inflector;
-use PhpParser\Node;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\Types\Boolean;
+use PhpParser\Node;
+use PhpParser\Node\Stmt\Class_;
 use Plumbok\Compiler\Statements;
 
 /**

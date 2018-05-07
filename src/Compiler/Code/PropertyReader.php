@@ -11,7 +11,7 @@ use Doctrine\Common\Annotations\DocParser;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\Types\Context;
-use phpDocumentor\Reflection\Types\Mixed;
+use phpDocumentor\Reflection\Types\Mixed_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property as ClassProperty;
 
@@ -77,11 +77,11 @@ class PropertyReader
             foreach ($property->props as $prop) {
                 $setter = '';
                 foreach ($classMethods as $method) {
-                    if ($method->name == 'set' . ucfirst($prop->name)) {
-                        $setter = $method->name;
+                    if ($method->name->name == 'set' . ucfirst($prop->name->name)) {
+                        $setter = $method->name->name;
                     }
                 }
-                $properties[] = new Property($prop->name, $type ?? new Mixed(), $prop->default !== null, $setter, $this->readAnnotations($property));
+                $properties[] = new Property($prop->name->name, $type ?? new Mixed_(), $prop->default !== null, $setter, $this->readAnnotations($property));
             }
         }
 

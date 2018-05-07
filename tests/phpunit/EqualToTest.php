@@ -7,7 +7,7 @@ use Plumbok\Test\Day\DayOfYear;
  * Date: 26.12.16
  * Time: 07:09
  */
-class EqualToTest extends PHPUnit_Framework_TestCase
+class EqualToTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

@@ -9,7 +9,7 @@ use org\bovigo\vfs\vfsStreamWrapper;
  * Date: 26.12.16
  * Time: 05:46
  */
-class BaseTestListenerTest extends PHPUnit_Framework_TestCase
+class BaseTestListenerTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

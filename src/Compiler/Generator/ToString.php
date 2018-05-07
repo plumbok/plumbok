@@ -9,17 +9,11 @@
 namespace Plumbok\Compiler\Generator;
 
 use phpDocumentor\Reflection\DocBlock;
-use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
-use phpDocumentor\Reflection\Fqsen;
-use phpDocumentor\Reflection\Types\Boolean;
-use phpDocumentor\Reflection\Types\Object_;
-use phpDocumentor\Reflection\Types\Self_;
 use phpDocumentor\Reflection\Types\String_;
-use Plumbok\Compiler;
-use Plumbok\Compiler\Code\Property;
-use Plumbok\Compiler\Statements;
 use PhpParser\Node;
+use Plumbok\Compiler;
+use Plumbok\Compiler\Statements;
 
 /**
  * Class ToString

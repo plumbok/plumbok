@@ -9,7 +9,7 @@ use Plumbok\Test\Person;
  * Date: 09.12.16
  * Time: 23:17
  */
-class GettersAndSettersTest extends PHPUnit_Framework_TestCase
+class GettersAndSettersTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

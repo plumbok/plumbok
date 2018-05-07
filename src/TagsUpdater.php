@@ -77,7 +77,7 @@ class TagsUpdater
             }
             $typeContext = new Context((string)$originalNamespace->name, $this->nodeFinder->findUses(...$originalNamespace->stmts));
             foreach ($this->nodeFinder->findClasses(...$originalNamespace->stmts) as $originalClass) {
-                $generatedClass = $this->findClass($originalClass->name, ...$generatedNamespace->stmts);
+                $generatedClass = $this->findClass($originalClass->name->name, ...$generatedNamespace->stmts);
                 if (!$generatedClass) {
                     continue;
                 }
@@ -97,7 +97,7 @@ class TagsUpdater
         if (!$originalNamespaces) {
             $typeContext = new Context('global', $this->nodeFinder->findUses(...$nodes));
             foreach ($this->nodeFinder->findClasses(...$nodes) as $originalClass) {
-                $generatedClass = $this->findClass($originalClass->name, ...$generated);
+                $generatedClass = $this->findClass($originalClass->name->name, ...$generated);
                 if (!$generatedClass) {
                     continue;
                 }
@@ -149,7 +149,7 @@ class TagsUpdater
     private function findClass(string $name, Node ...$nodes)
     {
         foreach ($this->nodeFinder->findClasses(...$nodes) as $class) {
-            if ($class->name == $name) {
+            if ($class->name->name == $name) {
                 return $class;
             }
         }
@@ -165,7 +165,7 @@ class TagsUpdater
      */
     private function createComment(Node\Stmt\Class_ $originalClass, Node\Stmt\Class_ $generatedClass, Context $context)
     {
-        $summary = "Class {$originalClass->name}";
+        $summary = "Class {$originalClass->name->name}";
         $description = null;
         $tags = [];
         if ($docComment = $originalClass->getDocComment()) {
@@ -182,10 +182,10 @@ class TagsUpdater
             }
         }
         $originalMethods = array_map(function (Node\Stmt\ClassMethod $method) {
-            return $method->name;
+            return $method->name->name;
         }, $originalClass->getMethods());
         foreach ($generatedClass->getMethods() as $method) {
-            if (in_array($method->name, $originalMethods)) {
+            if (in_array($method->name->name, $originalMethods)) {
                 continue;
             }
             $tags[] = $this->createMethodTag($method, $context);
@@ -220,6 +220,6 @@ class TagsUpdater
             $returnType = new Void_();
         }
 
-        return new Method($method->name, $arguments, $returnType, $method->isStatic());
+        return new Method($method->name->name, $arguments, $returnType, $method->isStatic());
     }
 }

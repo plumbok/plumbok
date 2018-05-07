@@ -8,19 +8,19 @@
 namespace Plumbok;
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\DocParser;
+use phpDocumentor\Reflection\DocBlock;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+use PhpParser\Comment\Doc;
+use PhpParser\Node;
+use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use Plumbok\Annotation\Getter;
 use Plumbok\Annotation\Setter;
 use Plumbok\Compiler\Code\ClassReader;
 use Plumbok\Compiler\Code\PropertyReader;
 use Plumbok\Compiler\Context;
-use Doctrine\Common\Annotations\DocParser;
-use phpDocumentor\Reflection\DocBlock;
-use phpDocumentor\Reflection\DocBlock\Serializer;
-use PhpParser\Comment\Doc;
-use PhpParser\Node;
-use PhpParser\Parser;
 use Plumbok\Compiler\GeneratorFactory;
 use Plumbok\Compiler\NodeFinder;
 use Plumbok\Compiler\Statements;
@@ -110,14 +110,14 @@ class Compiler
         );
         $classContext = new Context($classReader->readAnnotations($class));
         if ($classContext->requiresAllArgsConstructor()) {
-            $statements->merge($generatorFactory->generateAllArgsConstructor($class->name, ...$properties));
+            $statements->merge($generatorFactory->generateAllArgsConstructor($class->name->name, ...$properties));
         } elseif ($classContext->requiresRequiredArgsConstructor()) {
-            $statements->merge($generatorFactory->generateRequiredArgsConstructor($class->name, ...$properties));
+            $statements->merge($generatorFactory->generateRequiredArgsConstructor($class->name->name, ...$properties));
         } elseif ($classContext->requiresNoArgsConstructor()) {
-            $statements->merge($generatorFactory->generateNoArgsConstructor($class->name));
+            $statements->merge($generatorFactory->generateNoArgsConstructor($class->name->name));
         }
         if ($classContext->requiresEqualTo()) {
-            $statements->merge($generatorFactory->generateEqualTo($class->name, ...$properties));
+            $statements->merge($generatorFactory->generateEqualTo($class->name->name, ...$properties));
         }
         foreach ($properties as $property) {
             if ($classContext->requiresAllPropertyGetters()) {

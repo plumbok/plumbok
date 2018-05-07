@@ -5,11 +5,15 @@
  * Date: 12.12.16
  * Time: 14:11
  */
+
 namespace Plumbok\Test;
 
+use Plumbok\Annotation\ToString;
+use Plumbok\Annotation\Value;
+
 /**
- * @Value 
- * @ToString (property = "email")
+ * @Value ()
+ * @ToString (property="email")
  * @method void __construct(string $email, \Plumbok\Test\UnannotatedClass $someObject)
  * @method bool equalTo(object $other)
  * @method string getEmail()

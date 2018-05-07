@@ -7,16 +7,20 @@
  */
 namespace Plumbok\Test;
 
+use Plumbok\Annotation\Getter;
+use Plumbok\Annotation\Setter;
+
 /**
  * Class Number
  *
  * @method int getValue()
+ * @method void setValue(int $value)
  */
 class Number
 {
     /**
      * @var int
-     * @Getter
+     * @Getter @Setter()
      */
     private $value;
 }

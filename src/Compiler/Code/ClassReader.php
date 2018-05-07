@@ -46,7 +46,7 @@ class ClassReader
      */
     public function readAnnotations(Class_ $class) : array
     {
-        return $this->parser->parse((string)$class->getDocComment());
+        return $this->parser->parse($class->getDocComment() !== null ? (string)$class->getDocComment()->getText() : null);
     }
 
     /**
@@ -59,6 +59,6 @@ class ClassReader
             return new DocBlock('', null, [], $this->context);
         }
 
-        return DocBlockFactory::createInstance()->create((string)$class->getDocComment(), $this->context);
+        return DocBlockFactory::createInstance()->create($class->getDocComment() !== null ? (string)$class->getDocComment()->getReformattedText() : null, $this->context);
     }
 }
