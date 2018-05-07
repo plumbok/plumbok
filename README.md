@@ -6,7 +6,7 @@ Runtime Code Generator like Lombok for PHP.
 Code generation starts when additional autoloader detects class uses Plumbok annotations
 and loads newly generated code with added methods in preprocess step.
 
-![PHP 7.0](https://img.shields.io/badge/PHP-7.0-8C9CB6.svg?style=flat)
+![PHP 7.1](https://img.shields.io/badge/PHP-7.1-8C9CB6.svg?style=flat)
 [![Build Status](https://travis-ci.org/plumbok/plumbok.svg?branch=master)](https://travis-ci.org/plumbok/plumbok)
 
 ---
@@ -95,8 +95,6 @@ class Person
 
 After first run your original code will be little modified with 
 additional docblock ennotations (tags) in PhpDocumentor style.
-
-This is needed if your IDE doesn't have **Plumbok** plugin.
 
 ![PhpStorm Autocomplete Support](doc/ide-autocomplete.png)
 
@@ -351,7 +349,7 @@ Additional options:
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Michał Brzuchalski <michal.brzuchalski@gmail.com>
+Copyright (c) 2018 Michał Brzuchalski <michal.brzuchalski@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
