@@ -168,6 +168,8 @@ class Compiler
             $tags
         ));
 
+        $docComment = preg_replace('/(@.*) (\(.*\))/m', '$1$2', $docComment);
+
         return new Doc(str_replace("/**\n * \n *\n", "/**\n", $docComment));
     }
 }
