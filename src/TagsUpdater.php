@@ -191,10 +191,12 @@ class TagsUpdater
             $tags[] = $this->createMethodTag($method, $context);
         }
 
-        return str_replace(
-            "/**\n * \n *\n",
-            "/**\n",
-            (new DocBlock\Serializer())->getDocComment(new DocBlock($summary, $description, $tags, $context))
+        return preg_replace('/(@.*) (\(.*\))/m', '$1$2',
+            str_replace(
+                "/**\n * \n *\n",
+                "/**\n",
+                (new DocBlock\Serializer())->getDocComment(new DocBlock($summary, $description, $tags, $context))
+            )
         );
     }
 
