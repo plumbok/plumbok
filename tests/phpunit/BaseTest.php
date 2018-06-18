@@ -29,12 +29,20 @@ class BaseTestListenerTest extends \PHPUnit\Framework\TestCase
 
     public function testUnnamespacedFileCompile()
     {
+        $correctDocBlock = '/**
+ * @Data
+ * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
+ * @ORM\Table(name="account")
+ */';
+
         $compiler = new \Plumbok\Compiler();
         $file = vfsStream::url('src/Amount.php');
         file_put_contents($file, <<<PHP
 <?php
 /**
  * @Data
+ * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
+ * @ORM\Table(name="account")
  */
 class Amount {
     /**
@@ -50,6 +58,13 @@ PHP
         );
         $nodes = $compiler->compile($file);
         $this->assertCount(1, $nodes);
+
+        /** @var \PhpParser\Node\Stmt\Class_ $class */
+        $class = array_shift($nodes);
+        $commentText = explode(PHP_EOL, $class->getDocComment()->getText());
+
+        $this->assertCount(5, $commentText);
+        $this->assertEquals($correctDocBlock, $class->getDocComment()->getText());
     }
 
     /**
