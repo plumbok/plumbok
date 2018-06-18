@@ -9,7 +9,7 @@ namespace Plumbok\Annotation;
 
 /**
  * @Annotation
- * @Target({"PROPERTY"})
+ * @Target({"CLASS"})
  */
 final class RequiredArgsConstructor
 {
