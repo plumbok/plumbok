@@ -126,6 +126,15 @@ class TagsUpdater
     }
 
     /**
+     * @param string $classDoc
+     * @return string
+     */
+    public static function removeSpaceFromClassTags(string $classDoc): string
+    {
+        return preg_replace('/(@\S*)(\s*)(\(.*\)|\()/m', '$1$3', $classDoc);
+    }
+
+    /**
      * @param string $name
      * @param Node[] ...$nodes
      * @return Node\Stmt\Namespace_
@@ -191,7 +200,7 @@ class TagsUpdater
             $tags[] = $this->createMethodTag($method, $context);
         }
 
-        return preg_replace('/(@.*) (\(.*\))/m', '$1$2',
+        return self::removeSpaceFromClassTags(
             str_replace(
                 "/**\n * \n *\n",
                 "/**\n",

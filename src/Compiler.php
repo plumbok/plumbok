@@ -168,7 +168,7 @@ class Compiler
             $tags
         ));
 
-        $docComment = preg_replace('/(@.*) (\(.*\))/m', '$1$2', $docComment);
+        $docComment = TagsUpdater::removeSpaceFromClassTags($docComment);
 
         return new Doc(str_replace("/**\n * \n *\n", "/**\n", $docComment));
     }
