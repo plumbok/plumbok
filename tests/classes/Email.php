@@ -12,8 +12,8 @@ use Plumbok\Annotation\ToString;
 use Plumbok\Annotation\Value;
 
 /**
- * @Value ()
- * @ToString (property="email")
+ * @Value()
+ * @ToString(property="email")
  * @method void __construct(string $email, \Plumbok\Test\UnannotatedClass $someObject)
  * @method bool equalTo(object $other)
  * @method string getEmail()
