@@ -43,7 +43,7 @@ trait WithTypeResolver
     {
         $nullable = false;
         if ($type instanceof Compound) {
-            if (count($type) > 2) {
+            if ($type->getIterator()->count() > 2) {
                 throw new \Exception("Too many types!");
             }
 
