@@ -1,5 +1,5 @@
 {
-  "name": "plumbok/plumbok",
+  "name": "mjkruszewski/plumbok",
   "description": "Runtime Code Generator like Lombok for PHP",
   "license": "MIT",
   "authors": [
@@ -7,6 +7,10 @@
       "name": "Michał Brzuchalski",
       "email": "michal.brzuchalski@gmail.com",
       "homepage": "https://github.com/brzuchal/"
+    },
+    {
+      "name": "Maciej Kruszewski",
+      "email": "m.kruszewski@sunflux.pl"
     }
   ],
   "require": {
