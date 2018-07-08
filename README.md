@@ -6,8 +6,8 @@ Runtime Code Generator like Lombok for PHP.
 Code generation starts when additional autoloader detects class uses Plumbok annotations
 and loads newly generated code with added methods in preprocess step.
 
-![PHP 7.0](https://img.shields.io/badge/PHP-7.0-8C9CB6.svg?style=flat)
-[![Build Status](https://travis-ci.org/plumbok/plumbok.svg?branch=master)](https://travis-ci.org/plumbok/plumbok)
+![PHP 7.1](https://img.shields.io/badge/PHP-7.1-blue.svg)
+[![GitHub license](https://img.shields.io/github/license/MJKruszewski/plumbok.svg)](https://github.com/MJKruszewski/plumbok/blob/master/LICENSE)
 
 ---
 
