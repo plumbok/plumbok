@@ -24,6 +24,7 @@ class Setter extends GeneratorBase
 
     /**
      * @return Statements
+     * @throws \Exception
      */
     public function generate(): Statements
     {

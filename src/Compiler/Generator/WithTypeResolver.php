@@ -79,10 +79,6 @@ trait WithTypeResolver
      */
     private function isTypeNullable(Compound $type): bool
     {
-        if (PHP_VERSION_ID < 70100) {
-            return false;
-        }
-
         foreach ($type as $typeObj) {
             if ($typeObj instanceof Null_) {
                 return true;
