@@ -5,6 +5,7 @@
  * Date: 09.12.16
  * Time: 23:19
  */
+
 namespace Plumbok;
 
 use Composer\Autoload\ClassLoader;
@@ -36,12 +37,16 @@ class Autoload
      * @param Cache $cache Compiler cache, if null then cache in memory and eval code
      * @return bool
      */
-    public static function register(string $namespace, Cache $cache = null) : bool
+    public static function register(string $namespace, Cache $cache = null): bool
     {
         if (true === empty($namespace)) {
             throw new \InvalidArgumentException('Invalid namespace, trying to registered empty namespace');
         }
         foreach (spl_autoload_functions() as $loader) {
+            if (is_array($loader) && is_a($loader[0], 'Symfony\\Component\\Debug\\DebugClassLoader')) {
+                $loader = $loader[0]->getClassLoader();
+            }
+
             if (false === is_array($loader)) {
                 continue;
             }
