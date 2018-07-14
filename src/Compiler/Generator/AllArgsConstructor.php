@@ -43,7 +43,7 @@ class AllArgsConstructor extends GeneratorBase
                 'params' => array_map(function (Property $property) {
                     return new Node\Param(
                         new Node\Expr\Variable($property->getName()),
-                        null,
+                        new Node\Expr\ConstFetch(new Node\Name('null')),
                         $this->resolveType($property->getType())
                     );
                 }, $this->properties),

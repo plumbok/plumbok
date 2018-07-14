@@ -102,7 +102,7 @@ class Context
 
     private function applyData(Data $annotation)
     {
-        $this->requiredArgsConstructor = true;
+        $this->allArgsConstructor = true;
         $this->allPropertyGetters = true;
         $this->allPropertySetters = true;
     }
