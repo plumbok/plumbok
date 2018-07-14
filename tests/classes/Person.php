@@ -13,7 +13,7 @@ use Plumbok\Test\Day\DayOfMonth;
 
 /**
  * @Data()
- * @method void __construct(null|int $age, \Plumbok\Test\DayOfMonth $nameDay)
+ * @method void __construct(array | null $names, null | int $age, \Plumbok\Test\DayOfMonth | null $nameDay, int[] | null $favouriteNumbers)
  * @method array getNames()
  * @method void setNames(array $names)
  * @method null|int getAge()
