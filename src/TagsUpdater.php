@@ -5,6 +5,7 @@
  * Date: 18.12.16
  * Time: 12:43
  */
+
 namespace Plumbok;
 
 use phpDocumentor\Reflection\DocBlock;
@@ -126,6 +127,15 @@ class TagsUpdater
     }
 
     /**
+     * @param string $classDoc
+     * @return string
+     */
+    public static function removeSpaceFromClassTags(string $classDoc): string
+    {
+        return preg_replace('/(@\S*)(\s*)(\(.*\)|\()/m', '$1$3', $classDoc);
+    }
+
+    /**
      * @param string $name
      * @param Node[] ...$nodes
      * @return Node\Stmt\Namespace_
@@ -191,10 +201,12 @@ class TagsUpdater
             $tags[] = $this->createMethodTag($method, $context);
         }
 
-        return str_replace(
-            "/**\n * \n *\n",
-            "/**\n",
-            (new DocBlock\Serializer())->getDocComment(new DocBlock($summary, $description, $tags, $context))
+        return self::removeSpaceFromClassTags(
+            str_replace(
+                "/**\n * \n *\n",
+                "/**\n",
+                (new DocBlock\Serializer())->getDocComment(new DocBlock($summary, $description, $tags, $context))
+            )
         );
     }
 
@@ -203,15 +215,28 @@ class TagsUpdater
      * @param Context $context
      * @return Method
      */
-    private function createMethodTag(Node\Stmt\ClassMethod $method, Context $context) : Method
+    private function createMethodTag(Node\Stmt\ClassMethod $method, Context $context): Method
     {
         $docBlock = DocBlockFactory::createInstance()->create((string)$method->getDocComment(), $context);
-        $arguments = array_map(function (Param $param) {
+        $arguments = array_map(function (Param $param, int $key) use ($method) {
+            $compound = null;
+            $default = $method->getParams()[$key]->jsonSerialize()['default'];
+            if (
+                !empty($default)
+                && !($param->getType() instanceof \phpDocumentor\Reflection\Types\Compound)
+                && $default->jsonSerialize()['name']->toString() === 'null'
+            ) {
+                $compound = new \phpDocumentor\Reflection\Types\Compound([
+                    $param->getType(),
+                    new \phpDocumentor\Reflection\Types\Null_()
+                ]);
+            }
+
             return [
                 'name' => $param->getVariableName(),
-                'type' => $param->getType(),
+                'type' => $compound ?? $param->getType(),
             ];
-        }, $docBlock->getTagsByName('param'));
+        }, $docBlock->getTagsByName('param'), array_keys($docBlock->getTagsByName('param')));
         if ($docBlock->hasTag('return')) {
             /** @var Return_ $returnTag */
             $returnTag = $docBlock->getTagsByName('return')[0];

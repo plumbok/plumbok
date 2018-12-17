@@ -5,11 +5,14 @@
  * Date: 13.12.16
  * Time: 11:08
  */
+
 namespace Plumbok\Compiler\Generator;
 
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Null_;
 
 /**
  * Class WithTypeResolver
@@ -34,23 +37,54 @@ trait WithTypeResolver
     /**
      * @param Type $type
      * @return string
+     * @throws \Exception
      */
-    private function resolveType(Type $type) : string
+    private function resolveType(Type $type): string
     {
-//        /** @var TypeResolver $typeResolver */
-//        static $typeResolver;
-//        if ($typeResolver === null) {
-//            $typeResolver = new TypeResolver();
-//        }
+        $nullable = false;
+        if ($type instanceof Compound) {
+            if ($type->getIterator()->count() > 2) {
+                throw new \Exception("Too many types!");
+            }
+
+            $nullable = $this->isTypeNullable($type);
+            $type = $this->getMainType($type);
+        }
+
         if ($type instanceof Array_) {
             return 'array';
         }
-        foreach($this->typeContext->getNamespaceAliases() as $alias => $namespace) {
+        foreach ($this->typeContext->getNamespaceAliases() as $alias => $namespace) {
             if ((string)$type === "\\{$namespace}") {
                 return $alias;
             }
         }
 
-        return (string)$type;
+        return ($nullable && $type !== null ? '?' : '') . (string)$type;
+    }
+
+    private function getMainType(Compound $type): Type
+    {
+        foreach ($type as $typeObj) {
+            if (!($typeObj instanceof Null_)) {
+                return $typeObj;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param Compound $type
+     * @return bool
+     */
+    private function isTypeNullable(Compound $type): bool
+    {
+        foreach ($type as $typeObj) {
+            if ($typeObj instanceof Null_) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

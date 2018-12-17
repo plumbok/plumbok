@@ -12,12 +12,12 @@ use Plumbok\Annotation\Getter;
 use Plumbok\Test\Day\DayOfMonth;
 
 /**
- * @Data ()
- * @method void __construct(int $age, \Plumbok\Test\DayOfMonth $nameDay)
+ * @Data()
+ * @method void __construct(array | null $names, null | int $age, \Plumbok\Test\DayOfMonth | null $nameDay, int[] | null $favouriteNumbers)
  * @method array getNames()
  * @method void setNames(array $names)
- * @method int getAge()
- * @method void setAge(int $age)
+ * @method null|int getAge()
+ * @method void setAge(null|int $age)
  * @method \Plumbok\Test\DayOfMonth getNameDay()
  * @method void setNameDay(\Plumbok\Test\DayOfMonth $nameDay)
  * @method int[] getFavouriteNumbers()
@@ -33,7 +33,7 @@ class Person
 
     /**
      * Holds age
-     * @var int
+     * @var null|int
      * @Getter @Setter
      */
     private $age;

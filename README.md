@@ -6,8 +6,9 @@ Runtime Code Generator like Lombok for PHP.
 Code generation starts when additional autoloader detects class uses Plumbok annotations
 and loads newly generated code with added methods in preprocess step.
 
-![PHP 7.1](https://img.shields.io/badge/PHP-7.1-8C9CB6.svg?style=flat)
+![PHP 7.1](https://img.shields.io/badge/PHP-7.1-blue.svg)
 [![Build Status](https://travis-ci.org/plumbok/plumbok.svg?branch=master)](https://travis-ci.org/plumbok/plumbok)
+[![GitHub license](https://img.shields.io/github/license/plumbok/plumbok.svg)](https://github.com/plumbok/plumbok/blob/master/LICENSE)
 
 ---
 
@@ -16,25 +17,7 @@ and loads newly generated code with added methods in preprocess step.
 ### Install with Composer
 
 ```bash
-composer require plumbok/plumbok
-```
-
-### Install as PHAR
-
-You can simply download a pre-compiled and ready-to-use version as a Phar to any directory.
-Simply download the latest `plumbok.phar` file from [releases](https://github.com/plumbok/plumbok/releases) page.
-
-You can also simply run above command.
-
-```bash
-wget $( wget -qO- "https://api.github.com/repos/plumbok/plumbok/releases/latest" | sed -rn 's/.*"browser_download_url": "(.*)".*/\1/p' )
-chmod +x plumbok.phar
-```
-
-Then you're able to run CLI Compile command:
-
-```bash
-./plumbok.phar --help
+composer require mjkruszewski/plumbok
 ```
 
 ## Usage
@@ -332,18 +315,6 @@ Additional options:
 * `--help`, `-h` display help
 
 ---
-
-## TODO
-
-* [ ] Write documentation
-* [x] Replace eval with save to file and `include_once`
-* [x] Add generated code caching for performance improvements
-* [x] Add warmup command generating code for deployment
-* [x] Implement `@Getter` annotation
-* [x] Implement `@Setter` annotation
-* [x] Implement `@AllArgsConstructor`, `@NoArgsConstructor`, `@RequiredArgsConstructor` annotation
-* [x] Implement `@Equal` annotation
-* [x] Implement `@Value`, `@Data` annotations
 
 ## License
 

@@ -168,6 +168,8 @@ class Compiler
             $tags
         ));
 
+        $docComment = TagsUpdater::removeSpaceFromClassTags($docComment);
+
         return new Doc(str_replace("/**\n * \n *\n", "/**\n", $docComment));
     }
 }

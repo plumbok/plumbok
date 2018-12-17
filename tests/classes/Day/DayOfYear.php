@@ -11,7 +11,7 @@ namespace Plumbok\Test\Day;
 /**
  * @AllArgsConstructor
  * @EqualTo
- * @method void __construct(int $day, int $year)
+ * @method void __construct(int | null $day, int | null $year)
  * @method bool equalTo(object $other)
  */
 class DayOfYear

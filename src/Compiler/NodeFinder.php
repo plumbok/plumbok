@@ -47,7 +47,11 @@ class NodeFinder
             }
             if ($node instanceof Node\Stmt\Use_) {
                 foreach ($node->uses as $use) {
-                    $uses[$use->alias] = $use->name->toString();
+                    if(!empty($use->alias)) {
+                        $uses[$use->alias->name] = $use->name->toString();
+                    } else {
+                        $uses[] = $use->name->toString();
+                    }
                 }
             }
         }

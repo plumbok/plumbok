@@ -12,9 +12,9 @@ use Plumbok\Annotation\ToString;
 use Plumbok\Annotation\Value;
 
 /**
- * @Value ()
- * @ToString (property="email")
- * @method void __construct(string $email, \Plumbok\Test\UnannotatedClass $someObject)
+ * @Value()
+ * @ToString(property="email")
+ * @method void __construct(string | null $email, \Plumbok\Test\UnannotatedClass | null $someObject)
  * @method bool equalTo(object $other)
  * @method string getEmail()
  * @method string toString()
